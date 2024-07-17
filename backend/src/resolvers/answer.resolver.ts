@@ -10,7 +10,7 @@ export class AnswerResolver {
     @Arg("user") user?: string,
     @Arg("content") content?: string,
     @Arg("answer") answer?: string
-  ): Promise<UserAnswer> {
+  ): Promise<UserAnswer | string> {
     return AnswerService.addAnswer({ content, question, answer, user });
   }
 }

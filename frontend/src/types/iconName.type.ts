@@ -18,7 +18,8 @@ export type IconName =
   | "sort-alpha-down"
   | "folder-download"
   | "arrow-left"
+  | "sign-in"
+  | "sign-up"
   | "sign-out"
   | "paper-plane-top"
   | "cross";
-

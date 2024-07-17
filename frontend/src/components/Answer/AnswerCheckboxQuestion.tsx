@@ -1,7 +1,7 @@
 import { Question } from "@/types/question.type";
 import { QuestionForAnswerPage } from "@/types/questionForAnswerPage.type";
 
-function AnswerCheckboxesQuestion({
+function AnswerCheckboxQuestion({
   question,
   questions,
   setQuestions,
@@ -45,4 +45,4 @@ function AnswerCheckboxesQuestion({
   );
 }
 
-export default AnswerCheckboxesQuestion;
+export default AnswerCheckboxQuestion;
