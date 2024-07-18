@@ -17,11 +17,9 @@ export default function QuestionOptions({
     const currentQuestion: Question | null =
         questions.find((question) => question.id === questionId) || null;
 
-    // const questionOptions: Option[] = currentQuestion?.options || [];
     const [questionOptions, setQuestionOptions] = useState<Option[] | []>(
         currentQuestion?.options || []
     );
-    console.log(questionOptions)
 
 
     function handleQuestionOptionRemove(
@@ -92,7 +90,6 @@ export default function QuestionOptions({
     }
 
     function handleOptionsReorder(options: Option[]) {
-        console.log(options);
         const updatedQuestions = questions.map((question) => {
             if (question.id === questionId) {
                 return {
