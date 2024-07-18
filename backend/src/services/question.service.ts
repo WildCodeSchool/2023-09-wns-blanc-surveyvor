@@ -16,6 +16,9 @@ export async function getQuestionsBySurveyLink(
         },
         order: {
             sort: "ASC",
+            options: {
+                sort: "ASC",
+            },
         },
     });
 }

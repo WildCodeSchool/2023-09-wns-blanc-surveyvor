@@ -2,6 +2,8 @@ import { Option, Question } from "@/types/question.type";
 import { Reorder } from "framer-motion";
 import Input from "./Input";
 import Icon from "./Icon/Icon";
+import { useState } from "react";
+import { set } from "date-fns";
 
 export default function QuestionOptions({
     questions,
@@ -15,7 +17,12 @@ export default function QuestionOptions({
     const currentQuestion: Question | null =
         questions.find((question) => question.id === questionId) || null;
 
-    const questionOptions: Option[] = currentQuestion?.options || [];
+    // const questionOptions: Option[] = currentQuestion?.options || [];
+    const [questionOptions, setQuestionOptions] = useState<Option[] | []>(
+        currentQuestion?.options || []
+    );
+    console.log(questionOptions)
+
 
     function handleQuestionOptionRemove(
         index: number,
@@ -83,6 +90,26 @@ export default function QuestionOptions({
 
         setQuestions(updatedQuestions);
     }
+
+    function handleOptionsReorder(options: Option[]) {
+        console.log(options);
+        const updatedQuestions = questions.map((question) => {
+            if (question.id === questionId) {
+                return {
+                    ...question,
+                    options: options.map((option, optionIndex) => ({
+                        id: option.id,
+                        content: option.content,
+                        sort: optionIndex + 1,
+                    })),
+                };
+            }
+            return question;
+        });
+        setQuestionOptions(options);
+        setQuestions(updatedQuestions);
+    }
+
     return (
         <div className="options">
             <p className="subtitle">Options</p>
@@ -90,7 +117,12 @@ export default function QuestionOptions({
                 <Reorder.Group
                     axis="y"
                     values={questionOptions}
-                    onReorder={() => console.log("coucou")}
+                    onReorder={handleOptionsReorder}
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 10,
+                    }}
                 >
                     {questionOptions.map((option, index) => (
                         <Reorder.Item key={index} value={option}>
