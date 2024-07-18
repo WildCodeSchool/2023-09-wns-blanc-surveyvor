@@ -10,7 +10,7 @@ import { Question } from "./question";
 
 @Entity()
 @ObjectType()
-export class QuestionAnswer extends BaseEntity {
+export class QuestionOption extends BaseEntity {
     constructor(datas: { content: string } | null = null) {
         super();
         if (datas) {
@@ -25,6 +25,10 @@ export class QuestionAnswer extends BaseEntity {
     @Column()
     @Field()
     content: string;
+
+    @Column()
+    @Field()
+    sort: number;
 
     @Field(() => Question)
     @ManyToOne(() => Question, (question) => question.id, {

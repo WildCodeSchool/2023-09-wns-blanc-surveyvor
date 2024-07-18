@@ -38,22 +38,22 @@ export const DELETE_QUESTION = gql`
     }
 `;
 
-export const ADD_QUESTION_ANSWER = gql`
-    mutation CreateQuestionAnswer(
-        $questionAnswer: CreateQuestionAnswerInputType!
+export const ADD_QUESTION_OPTION = gql`
+    mutation CreateQuestionOption(
+        $questionOption: CreateQuestionOptionInputType!
     ) {
-        createQuestionAnswer(questionAnswer: $questionAnswer) {
+        createQuestionOption(questionOption: $questionOption) {
             content
         }
     }
 `;
 
-export const EDIT_QUESTION_ANSWER = gql`
-    mutation EditQuestionAnswer(
+export const EDIT_QUESTION_OPTION = gql`
+    mutation EditQuestionOption(
         $id: String!
-        $questionAnswer: EditQuestionAnswerInputType!
+        $questionOption: EditQuestionOptionInputType!
     ) {
-        editQuestionAnswer(id: $id, questionAnswer: $questionAnswer) {
+        editQuestionOption(id: $id, questionOption: $questionOption) {
             content
         }
     }
@@ -70,7 +70,7 @@ export const GET_QUESTIONS = gql`
                 id
                 type
             }
-            answer {
+            options {
                 content
                 id
             }

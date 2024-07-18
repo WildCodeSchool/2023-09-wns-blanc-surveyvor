@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Question } from "./question";
-import { QuestionAnswer } from "./questionAnswer";
+import { QuestionOption } from "./questionOption";
 import { User } from "./user";
 
 @Entity()
@@ -25,9 +25,9 @@ export class UserAnswer extends BaseEntity {
   @Field()
   question: Question;
 
-  @ManyToOne(() => QuestionAnswer, (questionAnswer) => questionAnswer.id)
+  @ManyToOne(() => QuestionOption, (questionOption) => questionOption.id)
   @Field({ nullable: true })
-  answer?: QuestionAnswer;
+  options: QuestionOption;
 
   @ManyToOne(() => User, (user) => user.id)
   @Field({ nullable: true })

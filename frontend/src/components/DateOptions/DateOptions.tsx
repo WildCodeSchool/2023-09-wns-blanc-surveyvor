@@ -1,4 +1,4 @@
-import { Answer, Question } from "@/types/question.type";
+import { Options, Question } from "@/types/question.type";
 
 export default function DateOptions({
     questions,
@@ -12,7 +12,7 @@ export default function DateOptions({
     const currentQuestion: Question | null =
         questions.find((question) => question.id === questionId) || null;
 
-    const questionOptions: Answer[] = currentQuestion?.answer || [];
+    const questionOptions: Options[] = currentQuestion?.options || [];
 
     const currentOption =
         questionOptions.length > 0 ? questionOptions[0].content : null;
@@ -22,7 +22,7 @@ export default function DateOptions({
             if (question.id === currentQuestion?.id) {
                 return {
                     ...question,
-                    answer: [{ id: "", content: e.target.value }],
+                    options: [{ id: "", content: e.target.value }],
                 };
             }
             return question;

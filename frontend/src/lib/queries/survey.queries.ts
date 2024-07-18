@@ -22,7 +22,7 @@ export const GET_SURVEY_BY_OWNER = gql`
       }
       question {
         title
-        answer {
+        options {
           content
         }
       }
@@ -62,7 +62,7 @@ export const ARCHIVE_SURVEY = gql`
       }
       question {
         title
-        answer {
+        options {
           content
         }
       }

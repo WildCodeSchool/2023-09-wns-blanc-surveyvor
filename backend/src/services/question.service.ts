@@ -12,10 +12,13 @@ export async function getQuestionsBySurveyLink(
         relations: {
             type: true,
             survey: true,
-            answer: true,
+            options: true,
         },
         order: {
             sort: "ASC",
+            options: {
+                sort: "ASC",
+            },
         },
     });
 }

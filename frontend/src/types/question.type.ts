@@ -1,13 +1,13 @@
 import { IconName } from "./iconName.type";
 
 export type Question = {
-  id: string;
+  id: string | undefined;
   title: string;
   type: QuestionType;
   sort: number;
   description: string;
   isOpen: boolean;
-  answer: Answer[] | undefined;
+  options: Option[] | undefined;
 };
 
 export type QuestionType = {
@@ -16,8 +16,9 @@ export type QuestionType = {
   icon: IconName;
 };
 
-export type Answer = {
+export type Option = {
   id: string;
   content: string;
   questionId: string;
+  sort: number;
 };
