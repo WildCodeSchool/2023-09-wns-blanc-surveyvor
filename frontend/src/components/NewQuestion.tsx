@@ -118,21 +118,22 @@ function NewQuestion({
                     data.createQuestion.type.type === "checkboxes" ||
                     data.createQuestion.type.type === "radio"
                 ) {
+                    console.log("question.options", question.options);
                     if (question.options) {
-                        question.options.map((options, index) => {
+                        question.options.map((option, index) => {
                             addQuestionOption({
                                 variables: {
                                     questionOption: {
-                                        content: options.content,
-                                        sort: question.sort,
+                                        content: option.content,
+                                        sort: option.sort,
                                         questionId: data.createQuestion.id,
                                     },
                                 },
                                 onCompleted: () => {
-                                    const totalOptionss =
+                                    const totalOptions =
                                         question.options?.length || 0;
 
-                                    if (index === totalOptionss - 1) {
+                                    if (index === totalOptions - 1) {
                                         getQuestions();
                                     }
                                 },
