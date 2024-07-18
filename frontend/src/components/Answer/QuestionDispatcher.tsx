@@ -35,20 +35,22 @@ function QuestionDispatcher({
       case "checkboxes":
         return (
           <div className="checkboxes-container">
-            {question.answer &&
-              question.answer.map((answerOption) => (
-                <AnswerCheckboxesQuestion
-                  key={answerOption.id}
-                  answerOption={answerOption}
-                  questionId={question.id}
-                  questions={questionList}
-                  setQuestions={
-                    setQuestions as React.Dispatch<
-                      React.SetStateAction<QuestionForAnswerPage[]>
-                    >
-                  }
-                />
-              ))}
+            {question.options &&
+              question.options
+                .sort((a, b) => a.sort - b.sort)
+                .map((option) => (
+                  <AnswerCheckboxesQuestion
+                    key={option.id}
+                    answerOption={option}
+                    questionId={question.id}
+                    questions={questionList}
+                    setQuestions={
+                      setQuestions as React.Dispatch<
+                        React.SetStateAction<QuestionForAnswerPage[]>
+                      >
+                    }
+                  />
+                ))}
           </div>
         );
       case "checkbox":
@@ -69,20 +71,22 @@ function QuestionDispatcher({
       case "radio":
         return (
           <div className="radios-container">
-            {question.answer &&
-              question.answer.map((answerOption) => (
-                <AnswerRadioQuestion
-                  key={answerOption.id}
-                  answerOption={answerOption}
-                  questionId={question.id}
-                  questions={questionList}
-                  setQuestions={
-                    setQuestions as React.Dispatch<
-                      React.SetStateAction<QuestionForAnswerPage[]>
-                    >
-                  }
-                />
-              ))}
+            {question.options &&
+              question.options
+                .sort((a, b) => a.sort - b.sort)
+                .map((option) => (
+                  <AnswerRadioQuestion
+                    key={option.id}
+                    answerOption={option}
+                    questionId={question.id}
+                    questions={questionList}
+                    setQuestions={
+                      setQuestions as React.Dispatch<
+                        React.SetStateAction<QuestionForAnswerPage[]>
+                      >
+                    }
+                  />
+                ))}
           </div>
         );
       case "date":

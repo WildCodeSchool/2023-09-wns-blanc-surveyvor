@@ -1,5 +1,5 @@
 import { Question } from "../entities/question";
-import { QuestionAnswer } from "../entities/questionAnswer";
+import { QuestionOption } from "../entities/questionOption";
 import { User } from "../entities/user";
 import { UserAnswer } from "../entities/userAnswer";
 import { getMe } from "./auth.service";
@@ -7,10 +7,10 @@ import { getMe } from "./auth.service";
 export async function addAnswer(answerData: {
   content?: string;
   question: string;
-  answer?: string;
+  option?: string;
   user?: string;
 }): Promise<UserAnswer | string> {
-  if (!answerData.content && !answerData.answer) {
+  if (!answerData.content && !answerData.option) {
     return "All answer fields are required";
   }
 
@@ -19,12 +19,12 @@ export async function addAnswer(answerData: {
     newAnswer.content = answerData.content;
   }
 
-  if (answerData.answer && answerData.answer.length > 0) {
-    const option = await QuestionAnswer.findOneBy({
-      id: answerData.answer,
+  if (answerData.option && answerData.option.length > 0) {
+    const option = await QuestionOption.findOneBy({
+      id: answerData.option,
     });
     if (option) {
-      newAnswer.answer = option;
+      newAnswer.options = option;
     }
   }
 

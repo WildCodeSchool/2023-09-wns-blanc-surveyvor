@@ -9,8 +9,8 @@ export class AnswerResolver {
     @Arg("question") question: string,
     @Arg("user") user?: string,
     @Arg("content") content?: string,
-    @Arg("answer") answer?: string
+    @Arg("answer") option?: string
   ): Promise<UserAnswer | string> {
-    return AnswerService.addAnswer({ content, question, answer, user });
+    return AnswerService.addAnswer({ content, question, option, user });
   }
 }

@@ -23,8 +23,8 @@ function AnswerDateQuestion({
   setQuestions: React.Dispatch<React.SetStateAction<QuestionForAnswerPage[]>>;
 }) {
   let typeOfDate: string;
-  question.answer && question.answer[0].content
-    ? (typeOfDate = question.answer[0].content)
+  question.options && question.options[0].content
+    ? (typeOfDate = question.options[0].content)
     : (typeOfDate = "date");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);

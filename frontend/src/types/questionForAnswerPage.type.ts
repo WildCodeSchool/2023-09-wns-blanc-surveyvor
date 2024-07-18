@@ -6,7 +6,7 @@ export type QuestionForAnswerPage = {
   type: QuestionType;
   description: string;
   isOpen: boolean;
-  answer: Answer[] | undefined;
+  options: Answer[] | undefined;
   isError: boolean;
   sort: number;
 };
@@ -21,4 +21,5 @@ export type Answer = {
   id: string;
   content: string;
   questionId: string;
+  sort: number;
 };

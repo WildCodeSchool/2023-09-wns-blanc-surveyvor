@@ -127,10 +127,10 @@ export const onSubmitAnswers = (
             }
             const regexUUID =
               /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-            let answerToSend: string = "";
+            let optionToSend: string = "";
             let contentToSend: string = "";
             if (answer.match(regexUUID)) {
-              answerToSend = answer;
+              optionToSend = answer;
             } else {
               contentToSend = answer;
             }
@@ -138,7 +138,7 @@ export const onSubmitAnswers = (
               await postAnswer({
                 variables: {
                   user: userAnswering,
-                  answer: answerToSend,
+                  option: optionToSend,
                   question: key,
                   content: contentToSend,
                 },

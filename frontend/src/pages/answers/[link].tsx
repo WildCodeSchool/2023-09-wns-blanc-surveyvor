@@ -1,9 +1,9 @@
-import AnswerCheckboxQuestion from "@/components/Answer/AnswerCheckboxQuestion";
-import AnswerCheckboxesQuestion from "@/components/Answer/AnswerCheckboxesQuestion";
-import AnswerDateQuestion from "@/components/Answer/AnswerDateQuestion";
+// import AnswerCheckboxQuestion from "@/components/Answer/AnswerCheckboxQuestion";
+// import AnswerCheckboxesQuestion from "@/components/Answer/AnswerCheckboxesQuestion";
+// import AnswerDateQuestion from "@/components/Answer/AnswerDateQuestion";
 import AnswerDefaultQuestion from "@/components/Answer/AnswerDefaultQuestion";
-import AnswerRadioQuestion from "@/components/Answer/AnswerRadioQuestion";
-import AnswerTextQuestion from "@/components/Answer/AnswerTextQuestion";
+// import AnswerRadioQuestion from "@/components/Answer/AnswerRadioQuestion";
+// import AnswerTextQuestion from "@/components/Answer/AnswerTextQuestion";
 import QuestionDispatcher from "@/components/Answer/QuestionDispatcher";
 import Icon from "@/components/Icon/Icon";
 import Modal from "@/components/Modal/Modal";
@@ -14,7 +14,7 @@ import {
   getNumberOfQuestions,
   onSubmitAnswers,
 } from "@/lib/tools/answer.tools";
-import { delay } from "@/lib/tools/delay.tools";
+// import { delay } from "@/lib/tools/delay.tools";
 import { QuestionForAnswerPage } from "@/types/questionForAnswerPage.type";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";

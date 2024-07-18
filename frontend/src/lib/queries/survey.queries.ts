@@ -109,9 +109,10 @@ export const GET_SURVEY_BY_LINK = gql`
       private
       publicationDate
       question {
-        answer {
+        options {
           content
           id
+          sort
         }
         title
         type {

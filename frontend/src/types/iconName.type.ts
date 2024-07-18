@@ -22,4 +22,5 @@ export type IconName =
   | "sign-up"
   | "sign-out"
   | "paper-plane-top"
-  | "cross";
+  | "cross"
+  | "";

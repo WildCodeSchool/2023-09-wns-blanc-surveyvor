@@ -1,4 +1,4 @@
-import { Answer } from "@/types/question.type";
+import { Option } from "@/types/question.type";
 import { QuestionForAnswerPage } from "@/types/questionForAnswerPage.type";
 
 function AnswerCheckboxesQuestion({
@@ -7,7 +7,7 @@ function AnswerCheckboxesQuestion({
   questions,
   setQuestions,
 }: {
-  answerOption: Answer;
+  answerOption: Option;
   questionId: string | undefined;
   questions: QuestionForAnswerPage[] | undefined;
   setQuestions: React.Dispatch<React.SetStateAction<QuestionForAnswerPage[]>>;

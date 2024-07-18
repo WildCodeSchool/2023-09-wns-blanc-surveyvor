@@ -13,7 +13,7 @@ export function findSurveyByLink(link: string): Promise<Survey | null> {
     relations: {
       state: true,
       question: {
-        answer: true,
+        options: true,
         type: true,
       },
     },

@@ -6,152 +6,148 @@ import { useState } from "react";
 import { set } from "date-fns";
 
 export default function QuestionOptions({
-    questions,
-    setQuestions,
-    questionId,
+  questions,
+  setQuestions,
+  questionId,
 }: {
-    questions: Question[];
-    setQuestions: (questions: Question[]) => void;
-    questionId: string;
+  questions: Question[];
+  setQuestions: (questions: Question[]) => void;
+  questionId: string;
 }) {
-    const currentQuestion: Question | null =
-        questions.find((question) => question.id === questionId) || null;
+  const currentQuestion: Question | null =
+    questions.find((question) => question.id === questionId) || null;
 
-    const [questionOptions, setQuestionOptions] = useState<Option[] | []>(
-        currentQuestion?.options || []
+  const [questionOptions, setQuestionOptions] = useState<Option[] | []>(
+    currentQuestion?.options || []
+  );
+
+  function handleQuestionOptionRemove(index: number, event: React.MouseEvent) {
+    event.preventDefault();
+
+    setQuestions(
+      questions.map((question) => {
+        if (question.id === questionId) {
+          if (question.options) {
+            question.options = question.options.filter(
+              (option, optionIndex) => optionIndex !== index
+            );
+          }
+        }
+        return question;
+      })
     );
+  }
 
+  function handleQuestionOptionAdd(event: React.MouseEvent) {
+    event.preventDefault();
+    console.log("click on button");
+    setQuestions(
+      questions.map((question) => {
+        console.log(question);
+        console.log(questionOptions);
+        if (question.id === questionId) {
+          if (question.options) {
+            question.options = [
+              ...question.options,
+              {
+                id: "",
+                content: "",
+                sort: question.options.length + 1,
+              },
+            ];
+          } else {
+            question.options = [{ id: "", content: "", sort: 1 }];
+          }
+        }
+        console.log("question in 62 : ", question);
+        return question;
+      })
+    );
+  }
+  function updateQuestions(value: string, index: number) {
+    const updatedQuestions = questions.map((question) => {
+      if (question.id === questionId) {
+        return {
+          ...question,
+          options:
+            question.options &&
+            question.options.map((option, optionIndex) =>
+              optionIndex === index
+                ? {
+                    ...option,
+                    content: value,
+                    sort: optionIndex + 1,
+                  }
+                : option
+            ),
+        };
+      }
+      return question;
+    });
 
-    function handleQuestionOptionRemove(
-        index: number,
-        event: React.MouseEvent
-    ) {
-        event.preventDefault();
+    setQuestions(updatedQuestions);
+  }
 
-        setQuestions(
-            questions.map((question) => {
-                if (question.id === questionId) {
-                    if (question.options) {
-                        question.options = question.options.filter(
-                            (option, optionIndex) => optionIndex !== index
-                        );
-                    }
-                }
-                return question;
-            })
-        );
-    }
+  function handleOptionsReorder(options: Option[]) {
+    const updatedQuestions = questions.map((question) => {
+      if (question.id === questionId) {
+        return {
+          ...question,
+          options: options.map((option, optionIndex) => ({
+            id: option.id,
+            content: option.content,
+            sort: optionIndex + 1,
+          })),
+        };
+      }
+      return question;
+    });
+    console.log("passing here 104");
+    setQuestionOptions(options);
+    setQuestions(updatedQuestions);
+  }
 
-    function handleQuestionOptionAdd(event: React.MouseEvent) {
-        event.preventDefault();
-
-        setQuestions(
-            questions.map((question) => {
-                if (question.id === questionId) {
-                    if (question.options) {
-                        question.options = [
-                            ...question.options,
-                            {
-                                id: "",
-                                content: "",
-                                sort: question.options.length + 1,
-                            },
-                        ];
-                    } else {
-                        question.options = [{ id: "", content: "", sort: 1 }];
-                    }
-                }
-                return question;
-            })
-        );
-    }
-    function updateQuestions(value: string, index: number) {
-        const updatedQuestions = questions.map((question) => {
-            if (question.id === questionId) {
-                return {
-                    ...question,
-                    options:
-                        question.options &&
-                        question.options.map((option, optionIndex) =>
-                            optionIndex === index
-                                ? {
-                                      ...option,
-                                      content: value,
-                                      sort: optionIndex + 1,
-                                  }
-                                : option
-                        ),
-                };
-            }
-            return question;
-        });
-
-        setQuestions(updatedQuestions);
-    }
-
-    function handleOptionsReorder(options: Option[]) {
-        const updatedQuestions = questions.map((question) => {
-            if (question.id === questionId) {
-                return {
-                    ...question,
-                    options: options.map((option, optionIndex) => ({
-                        id: option.id,
-                        content: option.content,
-                        sort: optionIndex + 1,
-                    })),
-                };
-            }
-            return question;
-        });
-        setQuestionOptions(options);
-        setQuestions(updatedQuestions);
-    }
-
-    return (
-        <div className="options">
-            <p className="subtitle">Options</p>
-            {questionOptions.length > 0 && (
-                <Reorder.Group
-                    axis="y"
-                    values={questionOptions}
-                    onReorder={handleOptionsReorder}
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 10,
-                    }}
+  return (
+    <div className="options">
+      <p className="subtitle">Options</p>
+      {questionOptions.length > 0 && (
+        <Reorder.Group
+          axis="y"
+          values={questionOptions}
+          onReorder={handleOptionsReorder}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+          }}
+        >
+          {questionOptions.map((option, index) => (
+            <Reorder.Item key={index} value={option}>
+              <div className="option" key={index}>
+                <Input
+                  inputName={`option-${index}`}
+                  value={option.content}
+                  setValue={(value: string) => updateQuestions(value, index)}
+                  placeholder="Option"
+                />
+                <button
+                  className="button-md-grey-outline"
+                  onClick={(event) => handleQuestionOptionRemove(index, event)}
                 >
-                    {questionOptions.map((option, index) => (
-                        <Reorder.Item key={index} value={option}>
-                            <div className="option" key={index}>
-                                <Input
-                                    inputName={`option-${index}`}
-                                    value={option.content}
-                                    setValue={(value: string) =>
-                                        updateQuestions(value, index)
-                                    }
-                                    placeholder="Option"
-                                />
-                                <button
-                                    className="button-md-grey-outline"
-                                    onClick={(event) =>
-                                        handleQuestionOptionRemove(index, event)
-                                    }
-                                >
-                                    <Icon name="trash" />
-                                </button>
-                            </div>
-                        </Reorder.Item>
-                    ))}
-                </Reorder.Group>
-            )}
-            <button
-                className="button-md-grey-outline"
-                onClick={(event) => handleQuestionOptionAdd(event)}
-            >
-                Ajouter une option
-                <Icon name="plus" />
-            </button>
-        </div>
-    );
+                  <Icon name="trash" />
+                </button>
+              </div>
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
+      )}
+      <button
+        className="button-md-grey-outline"
+        onClick={(event) => handleQuestionOptionAdd(event)}
+      >
+        Ajouter une option
+        <Icon name="plus" />
+      </button>
+    </div>
+  );
 }

@@ -36,8 +36,6 @@ function NavHeader({
     setIsConnected(Boolean(localStorage.getItem("token")));
   }, [router.pathname]);
 
-  console.log(isConnected);
-
   const handleSignOut = () => {
     localStorage.removeItem("token");
     router.push("/signin");
