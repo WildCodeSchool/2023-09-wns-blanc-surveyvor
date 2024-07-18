@@ -3,7 +3,6 @@ import { Reorder } from "framer-motion";
 import Input from "./Input";
 import Icon from "./Icon/Icon";
 import { useState } from "react";
-import { set } from "date-fns";
 
 export default function QuestionOptions({
   questions,
@@ -36,15 +35,17 @@ export default function QuestionOptions({
         return question;
       })
     );
+
+    setQuestionOptions(
+      questionOptions.filter((option, optionIndex) => optionIndex !== index)
+    );
   }
 
   function handleQuestionOptionAdd(event: React.MouseEvent) {
     event.preventDefault();
-    console.log("click on button");
+
     setQuestions(
       questions.map((question) => {
-        console.log(question);
-        console.log(questionOptions);
         if (question.id === questionId) {
           if (question.options) {
             question.options = [
@@ -59,10 +60,18 @@ export default function QuestionOptions({
             question.options = [{ id: "", content: "", sort: 1 }];
           }
         }
-        console.log("question in 62 : ", question);
         return question;
       })
     );
+
+    setQuestionOptions([
+      ...questionOptions,
+      {
+        id: "",
+        content: "",
+        sort: questionOptions.length + 1,
+      },
+    ]);
   }
   function updateQuestions(value: string, index: number) {
     const updatedQuestions = questions.map((question) => {
@@ -86,6 +95,18 @@ export default function QuestionOptions({
     });
 
     setQuestions(updatedQuestions);
+
+    setQuestionOptions(
+      questionOptions.map((option, optionIndex) =>
+        optionIndex === index
+          ? {
+              ...option,
+              content: value,
+              sort: optionIndex + 1,
+            }
+          : option
+      )
+    );
   }
 
   function handleOptionsReorder(options: Option[]) {
