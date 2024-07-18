@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
 import { Question } from "../entities/question";
-import { QuestionAnswer } from "../entities/questionAnswer";
+import { QuestionOption } from "../entities/questionOption";
 import { QuestionType } from "../entities/questionType";
 import { Role } from "../entities/role";
 import { Survey } from "../entities/survey";
@@ -20,7 +20,7 @@ export const dataSource = new DataSource({
   database: process.env.POSTGRES_DB,
   entities: [
     Question,
-    QuestionAnswer,
+    QuestionOption,
     QuestionType,
     Role,
     Survey,

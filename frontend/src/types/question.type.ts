@@ -7,7 +7,7 @@ export type Question = {
     sort: number;
     description: string;
     isOpen: boolean;
-    answer: Answer[] | undefined;
+    options: Option[] | undefined;
 };
 
 export type QuestionType = {
@@ -16,7 +16,8 @@ export type QuestionType = {
     icon: IconName;
 };
 
-export type Answer = {
+export type Option = {
     id: string;
     content: string;
+    sort: number;
 };

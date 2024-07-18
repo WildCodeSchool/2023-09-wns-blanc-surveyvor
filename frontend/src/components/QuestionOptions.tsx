@@ -1,4 +1,5 @@
-import { Answer, Question } from "@/types/question.type";
+import { Option, Question } from "@/types/question.type";
+import { Reorder } from "framer-motion";
 import Input from "./Input";
 import Icon from "./Icon/Icon";
 
@@ -14,7 +15,7 @@ export default function QuestionOptions({
     const currentQuestion: Question | null =
         questions.find((question) => question.id === questionId) || null;
 
-    const questionOptions: Answer[] = currentQuestion?.answer || [];
+    const questionOptions: Option[] = currentQuestion?.options || [];
 
     function handleQuestionOptionRemove(
         index: number,
@@ -25,8 +26,8 @@ export default function QuestionOptions({
         setQuestions(
             questions.map((question) => {
                 if (question.id === questionId) {
-                    if (question.answer) {
-                        question.answer = question.answer.filter(
+                    if (question.options) {
+                        question.options = question.options.filter(
                             (option, optionIndex) => optionIndex !== index
                         );
                     }
@@ -42,13 +43,17 @@ export default function QuestionOptions({
         setQuestions(
             questions.map((question) => {
                 if (question.id === questionId) {
-                    if (question.answer) {
-                        question.answer = [
-                            ...question.answer,
-                            { id: "", content: "" },
+                    if (question.options) {
+                        question.options = [
+                            ...question.options,
+                            {
+                                id: "",
+                                content: "",
+                                sort: question.options.length + 1,
+                            },
                         ];
                     } else {
-                        question.answer = [{ id: "", content: "" }];
+                        question.options = [{ id: "", content: "", sort: 1 }];
                     }
                 }
                 return question;
@@ -60,11 +65,15 @@ export default function QuestionOptions({
             if (question.id === questionId) {
                 return {
                     ...question,
-                    answer:
-                        question.answer &&
-                        question.answer.map((option, optionIndex) =>
+                    options:
+                        question.options &&
+                        question.options.map((option, optionIndex) =>
                             optionIndex === index
-                                ? { ...option, content: value }
+                                ? {
+                                      ...option,
+                                      content: value,
+                                      sort: optionIndex + 1,
+                                  }
                                 : option
                         ),
                 };
@@ -77,27 +86,36 @@ export default function QuestionOptions({
     return (
         <div className="options">
             <p className="subtitle">Options</p>
-            {questionOptions.length > 0 &&
-                questionOptions.map((option, index) => (
-                    <div className="option" key={index}>
-                        <Input
-                            inputName={`option-${index}`}
-                            value={option.content}
-                            setValue={(value: string) =>
-                                updateQuestions(value, index)
-                            }
-                            placeholder="Option"
-                        />
-                        <button
-                            className="button-md-grey-outline"
-                            onClick={(event) =>
-                                handleQuestionOptionRemove(index, event)
-                            }
-                        >
-                            <Icon name="trash" />
-                        </button>
-                    </div>
-                ))}
+            {questionOptions.length > 0 && (
+                <Reorder.Group
+                    axis="y"
+                    values={questionOptions}
+                    onReorder={() => console.log("coucou")}
+                >
+                    {questionOptions.map((option, index) => (
+                        <Reorder.Item key={index} value={option}>
+                            <div className="option" key={index}>
+                                <Input
+                                    inputName={`option-${index}`}
+                                    value={option.content}
+                                    setValue={(value: string) =>
+                                        updateQuestions(value, index)
+                                    }
+                                    placeholder="Option"
+                                />
+                                <button
+                                    className="button-md-grey-outline"
+                                    onClick={(event) =>
+                                        handleQuestionOptionRemove(index, event)
+                                    }
+                                >
+                                    <Icon name="trash" />
+                                </button>
+                            </div>
+                        </Reorder.Item>
+                    ))}
+                </Reorder.Group>
+            )}
             <button
                 className="button-md-grey-outline"
                 onClick={(event) => handleQuestionOptionAdd(event)}

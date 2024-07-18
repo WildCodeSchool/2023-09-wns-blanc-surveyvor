@@ -35,7 +35,7 @@ function NewSurvey() {
                 id: "",
                 type: "",
             },
-            answer: [],
+            options: [],
             isOpen: true,
         },
     ]);
@@ -70,7 +70,7 @@ function NewSurvey() {
                         id: "",
                         type: "",
                     },
-                    answer: [],
+                    options: [],
                     isOpen: true,
                 },
             ]);

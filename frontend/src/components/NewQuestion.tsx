@@ -9,7 +9,7 @@ import { Question } from "@/types/question.type";
 import QuestionOptions from "./QuestionOptions";
 import DateOptions from "./DateOptions/DateOptions";
 import {
-    ADD_QUESTION_ANSWER,
+    ADD_QUESTION_OPTION,
     CREATE_QUESTION,
     DELETE_QUESTION,
     GET_TYPES,
@@ -44,7 +44,7 @@ function NewQuestion({
 
     const [deleteQuestion] = useMutation(DELETE_QUESTION);
 
-    const [addQuestionAnswer] = useMutation(ADD_QUESTION_ANSWER);
+    const [addQuestionOption] = useMutation(ADD_QUESTION_OPTION);
 
     const { loading, error } = useQuery(GET_TYPES, {
         onCompleted: (data) => {
@@ -118,20 +118,21 @@ function NewQuestion({
                     data.createQuestion.type.type === "checkboxes" ||
                     data.createQuestion.type.type === "radio"
                 ) {
-                    if (question.answer) {
-                        question.answer.map((answer, index) => {
-                            addQuestionAnswer({
+                    if (question.options) {
+                        question.options.map((options, index) => {
+                            addQuestionOption({
                                 variables: {
-                                    questionAnswer: {
-                                        content: answer.content,
+                                    questionOption: {
+                                        content: options.content,
+                                        sort: question.sort,
                                         questionId: data.createQuestion.id,
                                     },
                                 },
                                 onCompleted: () => {
-                                    const totalAnswers =
-                                        question.answer?.length || 0;
+                                    const totalOptionss =
+                                        question.options?.length || 0;
 
-                                    if (index === totalAnswers - 1) {
+                                    if (index === totalOptionss - 1) {
                                         getQuestions();
                                     }
                                 },
@@ -147,11 +148,12 @@ function NewQuestion({
                         getQuestions();
                     }
                 } else if (data.createQuestion.type.type === "date") {
-                    if (question.answer) {
-                        addQuestionAnswer({
+                    if (question.options) {
+                        addQuestionOption({
                             variables: {
-                                questionAnswer: {
-                                    content: question.answer[0].content,
+                                questionOption: {
+                                    content: question.options[0].content,
+                                    sort: question.sort,
                                     questionId: data.createQuestion.id,
                                 },
                             },
