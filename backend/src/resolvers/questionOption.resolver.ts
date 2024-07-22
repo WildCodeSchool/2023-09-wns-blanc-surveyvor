@@ -6,21 +6,20 @@ import { EditQuestionOptionInputType } from "../types/EditQuestionOptionInputTyp
 
 @Resolver()
 export class QuestionOptionResolver {
-    @Mutation(() => QuestionOption)
-    async createQuestionOption(
-        @Arg("questionOption") questionOption: CreateQuestionOptionInputType
-    ): Promise<QuestionOption> {
-        return QuestionOptionService.createQuestionOption({
-            ...questionOption,
-        });
-    }
+  @Mutation(() => QuestionOption)
+  async createQuestionOption(
+    @Arg("questionOption") questionOption: CreateQuestionOptionInputType
+  ): Promise<QuestionOption> {
+    return QuestionOptionService.createQuestionOption({
+      ...questionOption,
+    });
+  }
 
-    @Mutation(() => QuestionOption)
-    async editQuestionOption(
-        @Arg("id") id: string,
-        @Arg("questionOption") questionOption: EditQuestionOptionInputType
-    ): Promise<QuestionOption | undefined> {
-        return QuestionOptionService.editQuestionOption(id, questionOption);
-    }
-
+  @Mutation(() => QuestionOption)
+  async editQuestionOption(
+    @Arg("id") id: string,
+    @Arg("questionOption") questionOption: EditQuestionOptionInputType
+  ): Promise<QuestionOption | undefined> {
+    return QuestionOptionService.editQuestionOption(id, questionOption);
+  }
 }

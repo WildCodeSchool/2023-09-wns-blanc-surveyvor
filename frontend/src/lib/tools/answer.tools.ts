@@ -119,34 +119,32 @@ export const onSubmitAnswers = (
         if (value && JSON.parse(value).length === 0) {
           console.error("Answer is empty");
         } else {
+          if (key.startsWith("input-date_") || key.startsWith("question_")) {
+            key = key.split("_")[1];
+          }
+          // }
           const answersInValue = JSON.parse(value);
-          for (let i = 0; i < answersInValue.length; i++) {
-            const answer = answersInValue[i];
-            if (key.startsWith("input-date_") || key.startsWith("question_")) {
-              key = key.split("_")[1];
-            }
-            const regexUUID =
-              /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-            let optionToSend: string = "";
-            let contentToSend: string = "";
-            if (answer.match(regexUUID)) {
-              optionToSend = answer;
-            } else {
-              contentToSend = answer;
-            }
-            try {
-              await postAnswer({
-                variables: {
-                  user: userAnswering,
-                  option: optionToSend,
-                  question: key,
-                  content: contentToSend,
-                },
-              });
-              answersPosted = true;
-            } catch (error) {
-              console.error("Error posting answer:", error);
-            }
+          const regexUUID =
+            /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+          let optionToSend: string = "";
+          let contentToSend: string = "";
+          if (answersInValue[0].match(regexUUID)) {
+            optionToSend = answersInValue;
+          } else {
+            contentToSend = answersInValue[0];
+          }
+          try {
+            await postAnswer({
+              variables: {
+                user: userAnswering,
+                option: optionToSend,
+                question: key,
+                content: contentToSend,
+              },
+            });
+            answersPosted = true;
+          } catch (error) {
+            console.error("Error posting answer:", error);
           }
         }
       }

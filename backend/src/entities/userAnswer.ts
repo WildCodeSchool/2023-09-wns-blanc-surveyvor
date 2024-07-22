@@ -3,6 +3,8 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -22,14 +24,15 @@ export class UserAnswer extends BaseEntity {
   content?: string;
 
   @ManyToOne(() => Question, (question) => question.id)
-  @Field()
+  @Field(() => Question)
   question: Question;
 
-  @ManyToOne(() => QuestionOption, (questionOption) => questionOption.id)
-  @Field({ nullable: true })
-  options: QuestionOption;
-
   @ManyToOne(() => User, (user) => user.id)
-  @Field({ nullable: true })
+  @Field(() => User, { nullable: true })
   user?: User;
+
+  @ManyToMany(() => QuestionOption, (option) => option.answer)
+  @JoinTable()
+  @Field(() => [QuestionOption])
+  selectedOptions: QuestionOption[];
 }

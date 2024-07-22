@@ -17,13 +17,15 @@ function QuestionDispatcher({
   question: QuestionForAnswerPage;
   questionList: QuestionForAnswerPage[];
 }) {
+  const copyQuestion = structuredClone(question);
+  copyQuestion.options && copyQuestion.options.sort((a, b) => a.sort - b.sort);
   const renderQuestion = useCallback(() => {
     switch (question.type.type) {
       case "text":
         return (
           <AnswerTextQuestion
-            key={question.id}
-            question={question}
+            key={copyQuestion.id}
+            question={copyQuestion}
             questions={questionList}
             setQuestions={
               setQuestions as React.Dispatch<
@@ -35,30 +37,28 @@ function QuestionDispatcher({
       case "checkboxes":
         return (
           <div className="checkboxes-container">
-            {question.options &&
-              question.options
-                .sort((a, b) => a.sort - b.sort)
-                .map((option) => (
-                  <AnswerCheckboxesQuestion
-                    key={option.id}
-                    answerOption={option}
-                    questionId={question.id}
-                    questions={questionList}
-                    setQuestions={
-                      setQuestions as React.Dispatch<
-                        React.SetStateAction<QuestionForAnswerPage[]>
-                      >
-                    }
-                  />
-                ))}
+            {copyQuestion.options &&
+              copyQuestion.options.map((option) => (
+                <AnswerCheckboxesQuestion
+                  key={option.id}
+                  answerOption={option}
+                  questionId={copyQuestion.id}
+                  questions={questionList}
+                  setQuestions={
+                    setQuestions as React.Dispatch<
+                      React.SetStateAction<QuestionForAnswerPage[]>
+                    >
+                  }
+                />
+              ))}
           </div>
         );
       case "checkbox":
         return (
           <div className="checkbox-container">
             <AnswerCheckboxQuestion
-              key={question.id}
-              question={question}
+              key={copyQuestion.id}
+              question={copyQuestion}
               questions={questionList}
               setQuestions={
                 setQuestions as React.Dispatch<
@@ -71,29 +71,27 @@ function QuestionDispatcher({
       case "radio":
         return (
           <div className="radios-container">
-            {question.options &&
-              question.options
-                .sort((a, b) => a.sort - b.sort)
-                .map((option) => (
-                  <AnswerRadioQuestion
-                    key={option.id}
-                    answerOption={option}
-                    questionId={question.id}
-                    questions={questionList}
-                    setQuestions={
-                      setQuestions as React.Dispatch<
-                        React.SetStateAction<QuestionForAnswerPage[]>
-                      >
-                    }
-                  />
-                ))}
+            {copyQuestion.options &&
+              copyQuestion.options.map((option) => (
+                <AnswerRadioQuestion
+                  key={option.id}
+                  answerOption={option}
+                  questionId={copyQuestion.id}
+                  questions={questionList}
+                  setQuestions={
+                    setQuestions as React.Dispatch<
+                      React.SetStateAction<QuestionForAnswerPage[]>
+                    >
+                  }
+                />
+              ))}
           </div>
         );
       case "date":
         return (
           <AnswerDateQuestion
-            key={question.id}
-            question={question}
+            key={copyQuestion.id}
+            question={copyQuestion}
             questions={questionList}
             setQuestions={
               setQuestions as React.Dispatch<
@@ -105,7 +103,7 @@ function QuestionDispatcher({
       default:
         break;
     }
-  }, [question, questionList, setQuestions]);
+  }, [copyQuestion, question.type.type, questionList, setQuestions]);
   return renderQuestion();
 }
 

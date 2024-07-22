@@ -1,3 +1,4 @@
+import { In } from "typeorm";
 import { Question } from "../entities/question";
 import { QuestionOption } from "../entities/questionOption";
 import { User } from "../entities/user";
@@ -7,7 +8,7 @@ import { getMe } from "./auth.service";
 export async function addAnswer(answerData: {
   content?: string;
   question: string;
-  option?: string;
+  option?: Array<string>;
   user?: string;
 }): Promise<UserAnswer | string> {
   if (!answerData.content && !answerData.option) {
@@ -17,15 +18,6 @@ export async function addAnswer(answerData: {
   const newAnswer = new UserAnswer();
   if (answerData.content && answerData.content.length > 0) {
     newAnswer.content = answerData.content;
-  }
-
-  if (answerData.option && answerData.option.length > 0) {
-    const option = await QuestionOption.findOneBy({
-      id: answerData.option,
-    });
-    if (option) {
-      newAnswer.options = option;
-    }
   }
 
   const question = await Question.findOneBy({ id: answerData.question });
@@ -42,6 +34,19 @@ export async function addAnswer(answerData: {
     }
   }
 
+  if (
+    answerData.option &&
+    answerData.option[0].length > 0 &&
+    answerData.option.length > 0
+  ) {
+    const options = await QuestionOption.findBy({
+      id: In(answerData.option),
+    });
+    if (options.length !== answerData.option.length) {
+      return "One or more options not found";
+    }
+    newAnswer.selectedOptions = options;
+  }
   try {
     const savedAnswer = await newAnswer.save();
     return savedAnswer;

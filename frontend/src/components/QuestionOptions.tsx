@@ -123,7 +123,6 @@ export default function QuestionOptions({
       }
       return question;
     });
-    console.log("passing here 104");
     setQuestionOptions(options);
     setQuestions(updatedQuestions);
   }

@@ -64,7 +64,7 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
           <textarea
             ref={combinedRef as React.RefObject<HTMLTextAreaElement>}
             name={inputName}
-            value={value}
+            value={value ? value : ""}
             data-testid={inputName}
             onChange={handleChange}
             placeholder={placeholder}

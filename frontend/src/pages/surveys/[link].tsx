@@ -71,7 +71,7 @@ function NewSurvey() {
           },
           options: [],
           isOpen: true,
-          sort: 0,
+          sort: questions ? questions.length + 1 : 1,
         },
       ]);
       let newQuestions = data.getQuestions.map((question: any) => ({
@@ -167,7 +167,7 @@ function NewSurvey() {
                     questions={questions}
                     surveyLink={link}
                     getQuestions={getQuestions}
-                    index={index}
+                    index={index + 1}
                   />
                 </Reorder.Item>
               );
