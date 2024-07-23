@@ -50,7 +50,7 @@ function AnswerDefaultQuestion({
         ...answers,
         [defaultQuestion.id.toString()]: answerDefault,
       });
-  }, [answerDefault, answers, defaultQuestion, setAnswers]);
+  }, []);
 
   const onClick = () => {
     const updatedQuestion =

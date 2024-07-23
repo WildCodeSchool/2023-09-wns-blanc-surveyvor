@@ -56,14 +56,15 @@ export const onSubmitAnswers = (
     if (input.type === "radio") {
       radioGroups.add(input.name);
     }
-    if (input.type === "checkbox") {
+    if (input.type === "checkbox" && !input.id.startsWith("question-input")) {
       for (let i = 0; i < checkboxQuestion.length; i++) {
         if (checkboxQuestion[i] !== input.name) {
           checkboxGroups.add(input.name);
-        } else {
-          answersInForm[input.name] = JSON.stringify(["no_answer"]);
         }
       }
+    }
+    if (input.id.startsWith("question-input")) {
+      answersInForm[input.name] = JSON.stringify(["no_answer"]);
     }
   });
 

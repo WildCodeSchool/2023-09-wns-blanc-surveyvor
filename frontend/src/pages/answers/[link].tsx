@@ -73,7 +73,7 @@ function AnswerSurvey() {
           setIsPrivate(data.getSurveyByLink.private);
           let nonDefaultQuestions = [];
           let defaultQuestions = [];
-          let checkboxQuestion = [];
+          let arrayOfCheckboxQuestion = [];
           for (let i = 0; i < data.getSurveyByLink.question.length; i++) {
             const question = {
               ...data.getSurveyByLink.question[i],
@@ -84,13 +84,13 @@ function AnswerSurvey() {
             } else {
               nonDefaultQuestions.push(question);
             }
-            if (question.type.type === "checkbox") {
-              checkboxQuestion.push(question.id);
+            if (question.type.type === "checkboxes") {
+              arrayOfCheckboxQuestion.push(question.id);
             }
           }
           setDefaultQuestions(defaultQuestions);
           setQuestions(nonDefaultQuestions);
-          setCheckboxQuestion(checkboxQuestion);
+          setCheckboxQuestion(arrayOfCheckboxQuestion);
         },
       });
     }

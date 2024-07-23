@@ -3,7 +3,7 @@ import { Question } from "../entities/question";
 import { QuestionOption } from "../entities/questionOption";
 import { User } from "../entities/user";
 import { UserAnswer } from "../entities/userAnswer";
-import { getMe } from "./auth.service";
+import { getMe, verifyToken } from "./auth.service";
 
 export async function addAnswer(answerData: {
   content?: string;
@@ -28,9 +28,15 @@ export async function addAnswer(answerData: {
   const user = answerData.user;
   let userAnswering: User | null;
   if (user && user.length > 0) {
-    userAnswering = await getMe(user);
-    if (userAnswering) {
-      newAnswer.user = userAnswering;
+    // TODO : verifyToken if expired doesn't work, need to change the verifyToken function
+    const payload = verifyToken(user);
+    if (payload) {
+      userAnswering = await getMe(user);
+      if (userAnswering) {
+        newAnswer.user = userAnswering;
+      }
+    } else {
+      throw new Error("Token invalid");
     }
   }
 
