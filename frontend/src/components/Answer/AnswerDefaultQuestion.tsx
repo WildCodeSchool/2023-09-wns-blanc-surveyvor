@@ -22,24 +22,27 @@ function AnswerDefaultQuestion({
 }) {
   const [answerDefault, setAnswerDefault] = useState<string>("");
 
-  let placeHolderForDefaultQuestion: string = "";
+  const [placeHolderForDefaultQuestion, setPlaceHolderForDefaultQuestion] =
+    useState<string>("");
 
-  switch (defaultQuestion.title) {
-    case "Nom":
-      placeHolderForDefaultQuestion = "Votre nom";
-      break;
-    case "Prénom":
-      placeHolderForDefaultQuestion = "Votre prénom";
-      break;
-    case "Email":
-      placeHolderForDefaultQuestion = "Votre email";
-      break;
-    case "Numéro de téléphone":
-      placeHolderForDefaultQuestion = "Votre numéro de téléphone";
-      break;
-    default:
-      break;
-  }
+  useEffect(() => {
+    switch (defaultQuestion.title) {
+      case "Nom":
+        setPlaceHolderForDefaultQuestion("Votre nom");
+        break;
+      case "Prénom":
+        setPlaceHolderForDefaultQuestion("Votre prénom");
+        break;
+      case "Email":
+        setPlaceHolderForDefaultQuestion("Votre email");
+        break;
+      case "Numéro de téléphone":
+        setPlaceHolderForDefaultQuestion("Votre numéro de téléphone");
+        break;
+      default:
+        break;
+    }
+  }, [defaultQuestion.title]);
 
   useEffect(() => {
     if (defaultQuestion)

@@ -1,6 +1,6 @@
 import { Question } from "@/types/question.type";
 import { fr } from "date-fns/locale";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import Input from "../Input";
 import { QuestionForAnswerPage } from "@/types/questionForAnswerPage.type";
@@ -22,10 +22,12 @@ function AnswerDateQuestion({
   questions: QuestionForAnswerPage[] | undefined;
   setQuestions: React.Dispatch<React.SetStateAction<QuestionForAnswerPage[]>>;
 }) {
-  let typeOfDate: string;
-  question.options && question.options[0].content
-    ? (typeOfDate = question.options[0].content)
-    : (typeOfDate = "date");
+  const [typeOfDate, setTypeOfDate] = useState<string>("");
+  useEffect(() => {
+    question.options && question.options[0].content
+      ? setTypeOfDate(question.options[0].content)
+      : setTypeOfDate("date");
+  }, [question.options]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [date, setDate] = useState(``);

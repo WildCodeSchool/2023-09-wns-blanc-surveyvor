@@ -1,5 +1,8 @@
-import { QuestionForAnswerPage } from "@/types/questionForAnswerPage.type";
-import { useCallback } from "react";
+import {
+  Answer,
+  QuestionForAnswerPage,
+} from "@/types/questionForAnswerPage.type";
+import { useCallback, useEffect, useState } from "react";
 import AnswerTextQuestion from "./AnswerTextQuestion";
 import AnswerCheckboxesQuestion from "./AnswerCheckboxesQuestion";
 import AnswerCheckboxQuestion from "./AnswerCheckboxQuestion";
@@ -17,15 +20,23 @@ function QuestionDispatcher({
   question: QuestionForAnswerPage;
   questionList: QuestionForAnswerPage[];
 }) {
-  const copyQuestion = structuredClone(question);
-  copyQuestion.options && copyQuestion.options.sort((a, b) => a.sort - b.sort);
+  const [sortedOptionsQuestion, setSortedOptionsQuestion] =
+    useState<QuestionForAnswerPage>();
+  useEffect(() => {
+    let sortedOptions: Answer[] | undefined;
+    if (question.options && question.options.length > 0) {
+      sortedOptions = [...question.options].sort((a, b) => a.sort - b.sort);
+    }
+    setSortedOptionsQuestion({ ...question, options: sortedOptions });
+  }, []);
   const renderQuestion = useCallback(() => {
+    if (!sortedOptionsQuestion) return null;
     switch (question.type.type) {
       case "text":
         return (
           <AnswerTextQuestion
-            key={copyQuestion.id}
-            question={copyQuestion}
+            key={sortedOptionsQuestion.id}
+            question={sortedOptionsQuestion}
             questions={questionList}
             setQuestions={
               setQuestions as React.Dispatch<
@@ -37,12 +48,12 @@ function QuestionDispatcher({
       case "checkboxes":
         return (
           <div className="checkboxes-container">
-            {copyQuestion.options &&
-              copyQuestion.options.map((option) => (
+            {sortedOptionsQuestion.options &&
+              sortedOptionsQuestion.options.map((option) => (
                 <AnswerCheckboxesQuestion
                   key={option.id}
                   answerOption={option}
-                  questionId={copyQuestion.id}
+                  questionId={sortedOptionsQuestion.id}
                   questions={questionList}
                   setQuestions={
                     setQuestions as React.Dispatch<
@@ -57,8 +68,8 @@ function QuestionDispatcher({
         return (
           <div className="checkbox-container">
             <AnswerCheckboxQuestion
-              key={copyQuestion.id}
-              question={copyQuestion}
+              key={sortedOptionsQuestion.id}
+              question={sortedOptionsQuestion}
               questions={questionList}
               setQuestions={
                 setQuestions as React.Dispatch<
@@ -71,12 +82,12 @@ function QuestionDispatcher({
       case "radio":
         return (
           <div className="radios-container">
-            {copyQuestion.options &&
-              copyQuestion.options.map((option) => (
+            {sortedOptionsQuestion.options &&
+              sortedOptionsQuestion.options.map((option) => (
                 <AnswerRadioQuestion
                   key={option.id}
                   answerOption={option}
-                  questionId={copyQuestion.id}
+                  questionId={sortedOptionsQuestion.id}
                   questions={questionList}
                   setQuestions={
                     setQuestions as React.Dispatch<
@@ -90,8 +101,8 @@ function QuestionDispatcher({
       case "date":
         return (
           <AnswerDateQuestion
-            key={copyQuestion.id}
-            question={copyQuestion}
+            key={sortedOptionsQuestion.id}
+            question={sortedOptionsQuestion}
             questions={questionList}
             setQuestions={
               setQuestions as React.Dispatch<
@@ -103,7 +114,7 @@ function QuestionDispatcher({
       default:
         break;
     }
-  }, [copyQuestion, question.type.type, questionList, setQuestions]);
+  }, [sortedOptionsQuestion, question.type.type, questionList, setQuestions]);
   return renderQuestion();
 }
 
