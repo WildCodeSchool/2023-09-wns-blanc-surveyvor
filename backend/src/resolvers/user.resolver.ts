@@ -10,9 +10,16 @@ export class UserResolver {
     return UserService.getByEmail(email);
   }
 
+  @Authorized()
   @Query(() => User)
   getMe(@Arg("token") token: string): Promise<User | null> {
     return AuthService.getMe(token);
+  }
+
+  @Authorized()
+  @Query(() => String)
+  getUser(@Arg("email") email: string): Promise<User | null> {
+    return UserService.getByEmailWithoutData(email);
   }
 
   @Mutation(() => User)
@@ -40,4 +47,3 @@ export class UserResolver {
     return "OK";
   }
 }
-

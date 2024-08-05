@@ -1,67 +1,67 @@
-import { Options, Question } from "@/types/question.type";
+import { Option, Question } from "@/types/question.type";
 
 export default function DateOptions({
-    questions,
-    setQuestions,
-    questionId,
+  questions,
+  setQuestions,
+  questionId,
 }: {
-    questions: Question[];
-    setQuestions: (questions: Question[]) => void;
-    questionId: string;
+  questions: Question[];
+  setQuestions: (questions: Question[]) => void;
+  questionId: string;
 }) {
-    const currentQuestion: Question | null =
-        questions.find((question) => question.id === questionId) || null;
+  const currentQuestion: Question | null =
+    questions.find((question) => question.id === questionId) || null;
 
-    const questionOptions: Options[] = currentQuestion?.options || [];
+  const questionOptions: Option[] = currentQuestion?.options || [];
 
-    const currentOption =
-        questionOptions.length > 0 ? questionOptions[0].content : null;
+  const currentOption =
+    questionOptions.length > 0 ? questionOptions[0].content : null;
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedQuestions = questions.map((question: Question) => {
-            if (question.id === currentQuestion?.id) {
-                return {
-                    ...question,
-                    options: [{ id: "", content: e.target.value }],
-                };
-            }
-            return question;
-        });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedQuestions = questions.map((question: Question) => {
+      if (question.id === currentQuestion?.id) {
+        return {
+          ...question,
+          options: [{ id: "", content: e.target.value, sort: 0 }],
+        };
+      }
+      return question;
+    });
 
-        setQuestions(updatedQuestions);
-    };
+    setQuestions(updatedQuestions);
+  };
 
-    return (
-        <div className="date-options-container">
-            <p className="label">Type de sélection</p>
-            <div className="input-radio input-radio--sm">
-                <label htmlFor="date">
-                    <input
-                        type="radio"
-                        id="date"
-                        name="date"
-                        value="date"
-                        checked={currentOption === "date"}
-                        onChange={handleChange}
-                    />
-                    <div className="radio"></div>
-                    Jour unique
-                </label>
-            </div>
-            <div className="input-radio input-radio--sm">
-                <label htmlFor="period">
-                    <input
-                        type="radio"
-                        id="period"
-                        name="date"
-                        value="period"
-                        checked={currentOption === "period"}
-                        onChange={handleChange}
-                    />
-                    <div className="radio"></div>
-                    Période
-                </label>
-            </div>
-        </div>
-    );
+  return (
+    <div className="date-options-container">
+      <p className="label">Type de sélection</p>
+      <div className="input-radio input-radio--sm">
+        <label htmlFor="date">
+          <input
+            type="radio"
+            id="date"
+            name="date"
+            value="date"
+            checked={currentOption === "date"}
+            onChange={handleChange}
+          />
+          <div className="radio"></div>
+          Jour unique
+        </label>
+      </div>
+      <div className="input-radio input-radio--sm">
+        <label htmlFor="period">
+          <input
+            type="radio"
+            id="period"
+            name="date"
+            value="period"
+            checked={currentOption === "period"}
+            onChange={handleChange}
+          />
+          <div className="radio"></div>
+          Période
+        </label>
+      </div>
+    </div>
+  );
 }

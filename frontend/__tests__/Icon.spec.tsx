@@ -18,4 +18,3 @@ describe("Icon", () => {
     expect(iconElement).toHaveAttribute("class", `icon--${icon.color}`);
   });
 });
-

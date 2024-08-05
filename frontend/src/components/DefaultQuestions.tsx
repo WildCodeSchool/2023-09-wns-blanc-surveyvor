@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Input from "./Input";
+// import Input from "./Input";
 import Toggle from "./Toggle";
 
 function DefaultQuestions() {
@@ -57,7 +57,8 @@ function DefaultQuestions() {
         {questions.map((question) => (
           <div
             className="input-switch input-switch--sm"
-            key={question.inputName}>
+            key={question.inputName}
+          >
             <Toggle
               inputName={question.inputName}
               labelName={question.labelName}
@@ -72,4 +73,3 @@ function DefaultQuestions() {
 }
 
 export default DefaultQuestions;
-

@@ -85,15 +85,51 @@ export const CREATE_SURVEY = gql`
   }
 `;
 
-
 export const EDIT_SURVEY = gql`
-    mutation Mutation($survey: EditSurveyInputType!, $editSurveyLink: String!) {
-        editSurvey(survey: $survey, link: $editSurveyLink) {
-            title
-            description
-            collectingUserData
-            private
-            link
-        }
+  mutation Mutation($survey: EditSurveyInputType!, $editSurveyLink: String!) {
+    editSurvey(survey: $survey, link: $editSurveyLink) {
+      title
+      description
+      collectingUserData
+      private
+      link
     }
+  }
+`;
+
+export const GET_SURVEY_BY_LINK = gql`
+  query Query($surveyLink: String!) {
+    getSurveyByLink(surveyLink: $surveyLink) {
+      archived
+      creationDate
+      description
+      endDate
+      id
+      link
+      private
+      publicationDate
+      question {
+        options {
+          content
+          id
+          sort
+        }
+        title
+        type {
+          id
+          type
+        }
+        description
+        defaultQuestion
+        id
+        sort
+      }
+      startDate
+      state {
+        state
+        id
+      }
+      title
+    }
+  }
 `;

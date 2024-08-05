@@ -36,8 +36,6 @@ function NavHeader({
     setIsConnected(Boolean(localStorage.getItem("token")));
   }, [router.pathname]);
 
-  console.log(isConnected);
-
   const handleSignOut = () => {
     localStorage.removeItem("token");
     router.push("/signin");
@@ -67,7 +65,8 @@ function NavHeader({
         {isConnected && backToForms && (
           <button
             className="button-md-grey-outline"
-            onClick={() => router.push("/")}>
+            onClick={() => router.push("/")}
+          >
             <Icon name="arrow-left" />
             <span className="hidden-mobile">Mes formulaires</span>
           </button>
@@ -75,7 +74,8 @@ function NavHeader({
         {newSurvey && router.pathname !== "/answers" && isConnected && (
           <button
             className="button-md-primary-solid"
-            onClick={() => createSurvey()}>
+            onClick={() => createSurvey()}
+          >
             <Icon name="plus" />
             <span className="hidden-mobile">Nouveau formulaire</span>
           </button>
@@ -83,7 +83,8 @@ function NavHeader({
         {newSurvey && router.pathname === "/answers" && !isConnected && (
           <button
             className="button-md-primary-solid"
-            onClick={() => createSurvey()}>
+            onClick={() => createSurvey()}
+          >
             <Icon name="plus" />
             <span className="hidden-mobile">Nouveau formulaire</span>
           </button>
@@ -102,10 +103,22 @@ function NavHeader({
           </button>
         )}
         {!isConnected && signInOrSignUp && (
-          <button className="button-md-grey-outline">
-            <Icon name="user" />
-            <span className="hidden-mobile">Inscription/Connexion</span>
-          </button>
+          <>
+            <button
+              className="button-md-primary-solid"
+              onClick={() => router.push("/signup")}
+            >
+              <Icon name="sign-up" />
+              <span className="hidden-mobile">Inscription</span>
+            </button>
+            <button
+              className="button-md-grey-outline"
+              onClick={() => router.push("/signin")}
+            >
+              <Icon name="sign-in" />
+              <span className="hidden-mobile">Connexion</span>
+            </button>
+          </>
         )}
         {isConnected && signOut && (
           <button className="button-md-grey-outline" onClick={handleSignOut}>
@@ -118,4 +131,3 @@ function NavHeader({
 }
 
 export default NavHeader;
-
