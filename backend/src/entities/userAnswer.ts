@@ -3,11 +3,13 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Question } from "./question";
-import { QuestionAnswer } from "./questionAnswer";
+import { QuestionOption } from "./questionOption";
 import { User } from "./user";
 
 @Entity()
@@ -17,19 +19,20 @@ export class UserAnswer extends BaseEntity {
   @Field()
   id: string;
 
-  @Column()
-  @Field()
-  content: string;
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  content?: string;
 
   @ManyToOne(() => Question, (question) => question.id)
-  @Field()
+  @Field(() => Question)
   question: Question;
 
-  @ManyToOne(() => QuestionAnswer, (questionAnswer) => questionAnswer.id)
-  @Field()
-  answer: QuestionAnswer;
-
   @ManyToOne(() => User, (user) => user.id)
-  @Field()
-  user: User;
+  @Field(() => User, { nullable: true })
+  user?: User;
+
+  @ManyToMany(() => QuestionOption, (option) => option.answer)
+  @JoinTable()
+  @Field(() => [QuestionOption])
+  selectedOptions: QuestionOption[];
 }

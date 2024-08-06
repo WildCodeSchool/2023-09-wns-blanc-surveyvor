@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { Survey } from "./survey";
 import { QuestionType } from "./questionType";
-import { QuestionAnswer } from "./questionAnswer";
+import { QuestionOption } from "./questionOption";
 
 @Entity()
 @ObjectType()
@@ -59,13 +59,13 @@ export class Question extends BaseEntity {
     @ManyToOne(() => Survey, (survey) => survey.link)
     survey: Survey;
 
-    @Field(() => [QuestionAnswer], { nullable: true })
+    @Field(() => [QuestionOption], { nullable: true })
     @OneToMany(
-        () => QuestionAnswer,
-        (questionAnswer) => questionAnswer.question,
+        () => QuestionOption,
+        (questionOption) => questionOption.question,
         {
             onDelete: "CASCADE",
         }
     )
-    answer: QuestionAnswer[];
+    options: QuestionOption[];
 }

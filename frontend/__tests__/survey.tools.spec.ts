@@ -81,4 +81,3 @@ describe("displayNumberOfQuestions Fn", () => {
     expect(displayNumberOfQuestions(survey_test_2)).toBe("Aucune question");
   });
 });
-

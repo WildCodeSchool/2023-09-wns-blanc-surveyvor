@@ -12,7 +12,15 @@ export function findSurveyByLink(link: string): Promise<Survey | null> {
     },
     relations: {
       state: true,
-      question: true,
+      question: {
+        options: true,
+        type: true,
+      },
+    },
+    order: {
+      question: {
+        sort: "ASC",
+      },
     },
   });
 }
@@ -117,4 +125,3 @@ export async function softDelete(link: string): Promise<Survey | undefined> {
     return await surveyToSoftDelete.save();
   }
 }
-

@@ -94,3 +94,7 @@ export function deleteUser(email: string): Promise<DeleteResult> {
   return User.delete({ email: email });
 }
 
+export function getByEmailWithoutData(email: string): Promise<User | null> {
+  return User.findOne({ where: { email } });
+}
+

@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 import { Question } from "../entities/question";
-import { QuestionAnswer } from "../entities/questionAnswer";
+import { QuestionOption } from "../entities/questionOption";
 import { QuestionType } from "../entities/questionType";
 import { Role } from "../entities/role";
 import { Survey } from "../entities/survey";
@@ -21,7 +21,7 @@ export const dataSourceTest = new DataSource({
   database: process.env.POSTGRES_DB_TEST,
   entities: [
     Question,
-    QuestionAnswer,
+    QuestionOption,
     QuestionType,
     Role,
     Survey,

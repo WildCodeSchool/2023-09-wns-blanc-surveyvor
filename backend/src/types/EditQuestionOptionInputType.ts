@@ -1,10 +1,10 @@
 import { Field, InputType } from "type-graphql";
 
 @InputType()
-export class CreateQuestionAnswerInputType {
+export class EditQuestionOptionInputType {
     @Field()
     content: string;
 
     @Field()
-    questionId: string;
+    sort: number;
 }
