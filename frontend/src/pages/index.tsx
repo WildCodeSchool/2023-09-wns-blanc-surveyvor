@@ -2,23 +2,17 @@ import NavLayout from "@/layouts/NavLayout";
 import { ReactElement, useEffect, useState } from "react";
 import { Survey } from "@/types/survey.type";
 import { useLazyQuery, useQuery } from "@apollo/client";
-import Link from "next/link";
 import Icon from "@/components/Icon/Icon";
-import { formatDate, removeAccents } from "@/lib/tools/format.tools";
+import { removeAccents } from "@/lib/tools/format.tools";
 import { SurveyState } from "@/types/surveyState.type";
 import {
   GET_SURVEY_BY_OWNER,
   GET_SURVEY_STATES,
 } from "@/lib/queries/survey.queries";
-import {
-  displayNumberOfQuestions,
-  displayState,
-  sortSurveys,
-} from "@/lib/tools/survey.tools";
+import { sortSurveys } from "@/lib/tools/survey.tools";
 import { sortOptions } from "@/lib/data/data";
-import CardMenu from "@/components/CardMenu/CardMenu";
 import DropdownItem from "@/components/Dropdown/Dropdown";
-import Modal from "@/components/Modal/Modal";
+import SurveyCard from "@/components/SurveyCard/SurveyCard";
 
 export default function Home() {
   // ----------------------------------States----------------------------------
@@ -115,37 +109,12 @@ export default function Home() {
         {SortedSurveys.map(
           (survey: Survey) =>
             !survey.deleteDate && (
-              <Link
-                className="survey-card"
-                href={`/surveys/${survey.link}`}
-                key={survey.id}>
-                <div className={`card-header ${survey.private && "private"}`}>
-                  {survey.private && (
-                    <Icon name="lock" height="1rem" width="1rem" />
-                  )}
-                  <div className={`badge-md-pale-${survey.state.color}-square`}>
-                    <span className="dot" />
-                    <p>{displayState(survey.state.state)}</p>
-                  </div>
-
-                  <CardMenu
-                    survey={survey}
-                    surveys={surveys}
-                    setSurveys={setSurveys}
-                  />
-                </div>
-
-                <h3 className="title text-lg text--medium">{survey.title}</h3>
-                <p className="description text-sm">{survey.description}</p>
-
-                <div className="badge-sm-colored-primary-round">
-                  <p>{displayNumberOfQuestions(survey)}</p>
-                </div>
-
-                <p className="creation-date text-sm">
-                  {formatDate(Number(survey.creationDate))}
-                </p>
-              </Link>
+              <SurveyCard
+                key={survey.id}
+                survey={survey}
+                surveys={surveys}
+                setSurveys={setSurveys}
+              />
             )
         )}
       </section>

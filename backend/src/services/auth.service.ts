@@ -67,7 +67,7 @@ export function signJwt(payload: any) {
   });
 }
 
-export function getMe(token: string) {
+export async function getMe(token: string) {
   const payload = verifyToken(token) as Payload;
 
   const user = await UserService.getByEmail(payload.email);
