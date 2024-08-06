@@ -66,6 +66,7 @@ describe("User resolver", () => {
           password: password,
         },
       });
+
       return signInResponse;
     };
 
@@ -96,3 +97,4 @@ describe("User resolver", () => {
     expect(deleteUserResponse.data?.deleteUser).toBe("OK");
   });
 });
+

@@ -81,15 +81,19 @@ export async function archive(
   link: string,
   archive: boolean
 ): Promise<Survey | undefined> {
-  const surveyToArchive = await Survey.findOne({
-    where: { link: link },
-    relations: {
-      state: true,
-      question: true,
-    },
-  });
+  try {
+    const surveyToArchive = await Survey.findOne({
+      where: { link: link },
+      relations: {
+        state: true,
+        question: true,
+      },
+    });
 
-  if (surveyToArchive) {
+    if (!surveyToArchive) {
+      throw new Error("Survey not found");
+    }
+
     surveyToArchive.archived = archive;
     surveyToArchive.archiveDate = new Date().getTime().toString();
     surveyToArchive.state =
@@ -98,6 +102,8 @@ export async function archive(
         : ((await getSurveyStateByName("closed")) as SurveyState);
 
     return await surveyToArchive.save();
+  } catch (error) {
+    throw error;
   }
 }
 

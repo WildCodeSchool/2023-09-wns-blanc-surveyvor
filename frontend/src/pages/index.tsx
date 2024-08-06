@@ -15,7 +15,7 @@ import {
   displayState,
   sortSurveys,
 } from "@/lib/tools/survey.tools";
-import { sortOptions } from "@/lib/fixtures/data";
+import { sortOptions } from "@/lib/data/data";
 import CardMenu from "@/components/CardMenu/CardMenu";
 import DropdownItem from "@/components/Dropdown/Dropdown";
 import Modal from "@/components/Modal/Modal";

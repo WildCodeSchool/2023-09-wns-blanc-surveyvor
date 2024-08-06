@@ -3,7 +3,7 @@ import Input from "@/components/Input";
 import Modal from "@/components/Modal/Modal";
 import PasswordValidationList from "@/components/PasswordValidationList";
 import NavLayout from "@/layouts/NavLayout";
-import { passwordValidationMessages } from "@/lib/fixtures/data";
+import { passwordValidationMessages } from "@/lib/data/data";
 import { GET_ME, UPDATE_USER } from "@/lib/queries/user.queries";
 import {
   PasswordValidationProps,

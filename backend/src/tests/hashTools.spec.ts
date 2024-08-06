@@ -6,3 +6,4 @@ describe("test cryptoHash", () => {
     expect(typeof cryptoHash("test")).toBe("string");
   });
 });
+

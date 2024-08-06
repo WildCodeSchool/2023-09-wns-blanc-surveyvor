@@ -1,4 +1,4 @@
-import { cardMenuOptions } from "@/lib/fixtures/data";
+import { cardMenuOptions } from "@/lib/data/data";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Icon from "../Icon/Icon";
 import { Survey } from "@/types/survey.type";
@@ -6,6 +6,7 @@ import { NextRouter, useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import { ARCHIVE_SURVEY, DELETE_SURVEY } from "@/lib/queries/survey.queries";
 import useClickOutside from "@/lib/hooks/useClickOutside";
+import Modal from "../Modal/Modal";
 
 function CardMenu({
   survey,
@@ -19,6 +20,7 @@ function CardMenu({
   //   ------------------------------------------------hooks-----------------------------------------------
 
   const [isCardMenuOpen, setIsCardMenuOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const router: NextRouter = useRouter();
   const { ref } = useClickOutside(isCardMenuOpen, setIsCardMenuOpen);
 
@@ -64,20 +66,24 @@ function CardMenu({
 
                 setSurveys(newSurveys);
               },
+              onError: (error) => {
+                console.error("Error archiving survey:", error);
+              },
             })
           );
 
         case "Supprimer":
-          return deleteSurvey({
-            variables: {
-              link: survey.link,
-            },
-            onCompleted: () =>
-              setSurveys(surveys.filter((s) => s.link !== survey.link)),
-          });
+          return setIsDeleteModalOpen(true);
       }
     },
-    [survey, archiveSurvey, deleteSurvey, surveys, setSurveys]
+    [
+      survey,
+      archiveSurvey,
+      setIsDeleteModalOpen,
+      deleteSurvey,
+      surveys,
+      setSurveys,
+    ]
   );
 
   //   ------------------------------------------------return-----------------------------------------------
@@ -119,6 +125,46 @@ function CardMenu({
             </button>
           ))}
         </div>
+      )}
+
+      {isDeleteModalOpen && (
+        <Modal
+          title="Supprimer un formulaire"
+          isOpen={isDeleteModalOpen}
+          setIsOpen={setIsDeleteModalOpen}>
+          <>
+            <p>
+              Etes-vous certain de vouloir supprimer le sondage{" "}
+              <span className="bold">{survey.title}</span> ?
+            </p>
+            <div className="modal-actions">
+              <button
+                className="button-md-primary-outline"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsDeleteModalOpen(false);
+                }}>
+                Annuler
+              </button>
+              <button
+                className="button-md-error-solid"
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteSurvey({
+                    variables: {
+                      link: survey.link,
+                    },
+                    onCompleted: () =>
+                      setSurveys(surveys.filter((s) => s.link !== survey.link)),
+                  });
+                }}>
+                Supprimer
+              </button>
+            </div>
+          </>
+        </Modal>
       )}
     </div>
   );

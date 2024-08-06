@@ -28,6 +28,7 @@ export class SurveyResolver {
     return SurveyService.create({ title, user });
   }
 
+  @Authorized()
   @Mutation(() => Survey)
   editSurvey(
     @Arg("link") link: string,
@@ -36,6 +37,7 @@ export class SurveyResolver {
     return SurveyService.edit(link, survey);
   }
 
+  @Authorized()
   @Mutation(() => Survey)
   archiveSurvey(
     @Arg("link") link: string,

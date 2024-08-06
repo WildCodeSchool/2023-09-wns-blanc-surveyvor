@@ -43,12 +43,12 @@ function Modal({
         ref={ref as React.RefObject<HTMLDivElement>}
         className="modal"
         onClick={(e) => e.stopPropagation()}>
-        <section className="modal-header">
+        <header className="modal-header">
           <p className="text-xl text--medium">{title}</p>
           <button className="close" onClick={() => setIsOpen(false)}>
             <Icon name="cross" width="16" />
           </button>
-        </section>
+        </header>
         {children}
       </div>
     </div>
