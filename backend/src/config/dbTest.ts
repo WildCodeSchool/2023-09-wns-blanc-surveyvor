@@ -9,6 +9,7 @@ import { UserAnswer } from "../entities/userAnswer";
 import { SurveyState } from "../entities/surveyState";
 
 import * as dotenv from "dotenv";
+import { Submission } from "../entities/submission";
 
 dotenv.config();
 
@@ -28,8 +29,10 @@ export const dataSourceTest = new DataSource({
     User,
     UserAnswer,
     SurveyState,
+    Submission,
   ],
   logging: true,
   synchronize: false,
   migrations: ["migrations/*.{ts,js}"],
 });
+

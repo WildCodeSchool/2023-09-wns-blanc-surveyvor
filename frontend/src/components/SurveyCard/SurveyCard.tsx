@@ -19,7 +19,11 @@ function SurveyCard({ survey, surveys, setSurveys }: CardProps) {
   return (
     <Link
       className="survey-card"
-      href={`/surveys/${survey.link}`}
+      href={
+        survey.state.state === "draft"
+          ? `/surveys/${survey.link}`
+          : `/surveys/${survey.link}/results`
+      }
       key={survey.id}>
       <div className={`card-header ${survey.private && "private"}`}>
         {survey.private && <Icon name="lock" height="1rem" width="1rem" />}
@@ -27,7 +31,19 @@ function SurveyCard({ survey, surveys, setSurveys }: CardProps) {
           <span className="dot" />
           <p>{displayState(survey.state.state)}</p>
         </div>
-
+        <div className="mode">
+          <Icon
+            name={
+              survey.state.state === "draft"
+                ? "attribution-pencil"
+                : "chart-histogram"
+            }
+            width="16"
+          />
+          <p className="text-sm">
+            {survey.state.state === "draft" ? "Mode Edition" : "Mode Analyse"}
+          </p>
+        </div>
         <CardMenu survey={survey} surveys={surveys} setSurveys={setSurveys} />
       </div>
 

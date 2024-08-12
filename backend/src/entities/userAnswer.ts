@@ -11,6 +11,7 @@ import {
 import { Question } from "./question";
 import { QuestionOption } from "./questionOption";
 import { User } from "./user";
+import { Submission } from "./submission";
 
 @Entity()
 @ObjectType()
@@ -27,12 +28,17 @@ export class UserAnswer extends BaseEntity {
   @Field(() => Question)
   question: Question;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { nullable: true })
   @Field(() => User, { nullable: true })
-  user?: User;
+  user?: User | null;
 
   @ManyToMany(() => QuestionOption, (option) => option.answer)
   @JoinTable()
   @Field(() => [QuestionOption])
   selectedOptions: QuestionOption[];
+
+  @ManyToOne(() => Submission, (submission) => submission.id)
+  @Field(() => Submission)
+  submission: Submission;
 }
+

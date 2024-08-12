@@ -27,5 +27,6 @@ export type IconName =
   | "eye-crossed"
   | "warning"
   | "attribution-pencil"
-  | "chart-histogram";
+  | "chart-histogram"
+  | "";
 

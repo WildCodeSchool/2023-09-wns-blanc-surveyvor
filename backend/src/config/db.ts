@@ -8,6 +8,7 @@ import { Survey } from "../entities/survey";
 import { User } from "../entities/user";
 import { UserAnswer } from "../entities/userAnswer";
 import { SurveyState } from "../entities/surveyState";
+import { Submission } from "../entities/submission";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ export const dataSource = new DataSource({
     User,
     UserAnswer,
     SurveyState,
+    Submission,
   ],
   logging: true,
   synchronize: false,
