@@ -84,8 +84,6 @@ function Profile() {
     }
   }, [data]);
 
-  console.log(personalData);
-
   useEffect(() => {
     validatePassword(newPassword, setPasswordValidations, passwordValidations);
 

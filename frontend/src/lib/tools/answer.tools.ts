@@ -109,7 +109,6 @@ export const onSubmitAnswers = (
 
   // check if all questions are answered
   if (callbackGetNumberOfQuestions() === Object.keys(answersInForm).length) {
-    console.log("every answer completed");
     setModal({
       isOpen: true,
       content: "Êtes-vous certain de vouloir envoyer vos réponses ?",
@@ -161,11 +160,6 @@ export const onSubmitAnswers = (
       }
     });
   } else {
-    console.log(
-      `${
-        Object.keys(answersInForm).length
-      }/${callbackGetNumberOfQuestions()} answers completed`
-    );
     Toast.fire({
       icon: "error",
       title: "Les champs ne sont pas tous remplis",
@@ -200,3 +194,4 @@ export const onSubmitAnswers = (
     });
   }
 };
+

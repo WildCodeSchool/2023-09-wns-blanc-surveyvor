@@ -45,8 +45,6 @@ export async function addAnswer(answerData: {
       throw new Error("Already answered");
     }
 
-    console.log("newAnswer : ", newAnswer);
-
     if (answerData.user) {
       // Si un utilisateur est fourni, vérifiez le token
       const payload = verifyToken(answerData.user);
@@ -62,8 +60,6 @@ export async function addAnswer(answerData: {
       // Si aucun utilisateur n'est fourni, laissez `newAnswer.user` comme `null`
       newAnswer.user = null; // Ceci est optionnel, car c'est déjà `undefined`/`null` par défaut
     }
-
-    console.log("coucou before options");
 
     if (
       answerData.option &&
