@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import useCombinedRefs from "../lib/fixtures/useCombinedRefs";
 
 interface InputProps {
+  disabled?: boolean;
   focus?: boolean;
   type?: string;
   inputName: string;
@@ -20,6 +21,7 @@ interface InputProps {
 const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
   (
     {
+      disabled = false,
       focus,
       type,
       inputName,
@@ -85,6 +87,7 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
               value={value}
               data-testid={inputName}
               onChange={handleChange}
+              disabled={disabled}
               onBlur={onBlur}
               onClick={onClick}
               {...(inputName.startsWith("input-date_") && {
