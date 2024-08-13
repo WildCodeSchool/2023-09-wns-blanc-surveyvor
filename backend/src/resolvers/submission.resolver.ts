@@ -14,10 +14,10 @@ export class SubmissionResolver {
 
   @Mutation(() => Submission)
   postSubmission(
-    @Ctx("user") user: User,
-    @Arg("surveyLink") surveyLink: string
+    @Arg("surveyLink") surveyLink: string,
+    @Arg("user", () => String, { nullable: true }) userId: string | null
   ) {
-    return SubmissionService.postSubmission(user, surveyLink);
+    return SubmissionService.postSubmission(userId, surveyLink);
   }
 }
 

@@ -26,11 +26,11 @@ export class Submission extends BaseEntity {
   @Field()
   count: number;
 
-  @Field()
-  @ManyToOne(() => User, (user) => user.id)
-  user: User;
+  @Field(() => User, { nullable: true })
+  @ManyToOne(() => User, (user) => user.id, { nullable: true })
+  user: User | null;
 
-  @Field()
+  @Field(() => Survey)
   @ManyToOne(() => Survey, (survey) => survey.id)
   survey: Survey;
 

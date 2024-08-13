@@ -13,14 +13,15 @@ async function getSubmissionCount(surveyLink: string) {
   return await Submission.count({ where: { survey: { link: surveyLink } } });
 }
 
-export async function postSubmission(user: User, surveyLink: string) {
+export async function postSubmission(
+  userId: string | null,
+  surveyLink: string
+) {
   try {
-    let submission: Submission;
-    if (user) {
-      submission = new Submission(user);
-    } else {
-      submission = new Submission();
-    }
+    const user = userId ? await User.findOne({ where: { id: userId } }) : null;
+
+    const submission = new Submission(user);
+
     const survey = await findSurveyByLink(surveyLink);
 
     if (!survey) {
