@@ -47,14 +47,10 @@ export async function addAnswer(answerData: {
 
     if (answerData.user) {
       // Si un utilisateur est fourni, vérifiez le token
-      const payload = verifyToken(answerData.user);
-      if (payload) {
-        const userAnswering = await getMe(answerData.user);
-        if (userAnswering) {
-          newAnswer.user = userAnswering;
-        }
-      } else {
-        throw new Error("Token invalid");
+
+      const userAnswering = await getMe(answerData.user);
+      if (userAnswering) {
+        newAnswer.user = userAnswering;
       }
     } else {
       // Si aucun utilisateur n'est fourni, laissez `newAnswer.user` comme `null`

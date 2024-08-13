@@ -30,14 +30,12 @@ export const onSubmitAnswers = (
     setModal,
     Toast,
     router,
+    token,
+    submissionId,
   }: OnSubmitAnswersType,
   event: FormEvent
 ): void => {
   event.preventDefault();
-
-  let userAnswering: string = "";
-  const token = localStorage.getItem("token");
-  if (token) userAnswering = token;
 
   const formData = new FormData(event.target as HTMLFormElement);
   const answersInForm: { [key: string]: string } = {};
@@ -122,7 +120,7 @@ export const onSubmitAnswers = (
           if (key.startsWith("input-date_") || key.startsWith("question_")) {
             key = key.split("_")[1];
           }
-          // }
+
           const answersInValue = JSON.parse(value);
           const regexUUID =
             /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
@@ -134,12 +132,15 @@ export const onSubmitAnswers = (
             contentToSend = answersInValue[0];
           }
           try {
+            console.log(submissionId);
+
             await postAnswer({
               variables: {
-                user: userAnswering,
+                user: token,
                 option: optionToSend,
                 question: key,
                 content: contentToSend,
+                submission: submissionId,
               },
             });
             answersPosted = true;

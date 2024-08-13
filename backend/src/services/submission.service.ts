@@ -1,5 +1,6 @@
 import { Submission } from "../entities/submission";
 import { User } from "../entities/user";
+import { getMe } from "./auth.service";
 import { findSurveyByLink } from "./survey.service";
 
 export async function getSubmissionsBySurveyLink(surveyLink: string) {
@@ -14,11 +15,11 @@ async function getSubmissionCount(surveyLink: string) {
 }
 
 export async function postSubmission(
-  userId: string | null,
+  userToken: string | null,
   surveyLink: string
 ) {
   try {
-    const user = userId ? await User.findOne({ where: { id: userId } }) : null;
+    const user = userToken ? await getMe(userToken) : null;
 
     const submission = new Submission(user);
 

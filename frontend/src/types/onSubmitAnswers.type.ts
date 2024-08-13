@@ -25,4 +25,7 @@ export type OnSubmitAnswersType = {
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
   Toast: any;
   router: NextRouter;
+  token: string | null;
+  submissionId: string;
 };
+
