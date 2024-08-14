@@ -19,10 +19,14 @@
 @use "components/Answer/AnswerDefaultQuestion.scss";
 @use "components/Answer/AnswerDate.scss";
 @use "components/Answer/AnswerCheckboxQuestion.scss";
-@use "../components/Dropdown/Dropdown.scss"; // Use pages styles
+@use "../components/Dropdown/Dropdown.scss";
 @use "../components/Modal/Modal.scss";
 @use "../components/CardMenu/CardMenu.scss";
 @use "../components/SurveyCard/SurveyCard.scss";
+@use "../components/Results/TextQuestionResults.scss";
+@use "../components/Results/MultipleChoiceQuestionResults.scss";
+
+// Use pages styles
 @use "pages/NewSurvey.scss";
 @use "pages/Access.scss";
 @use "pages/Home.scss";

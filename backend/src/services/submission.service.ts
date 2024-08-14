@@ -1,5 +1,4 @@
 import { Submission } from "../entities/submission";
-import { User } from "../entities/user";
 import { getMe } from "./auth.service";
 import { findSurveyByLink } from "./survey.service";
 

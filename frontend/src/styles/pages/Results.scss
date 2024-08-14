@@ -35,5 +35,24 @@
       }
     }
   }
+
+  .question-results {
+    .question-header .title {
+      display: flex;
+      gap: 1rem;
+
+      @include text("xl", $font: $font-family-accent, $weight: 500);
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .results {
+    .survey-info {
+      .info-header {
+        flex-wrap: nowrap;
+      }
+    }
+  }
 }
 

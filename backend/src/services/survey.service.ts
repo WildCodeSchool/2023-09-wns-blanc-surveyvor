@@ -15,6 +15,7 @@ export function findSurveyByLink(link: string): Promise<Survey | null> {
       question: {
         options: true,
         type: true,
+        answers: { selectedOptions: true },
       },
     },
     order: {
@@ -125,3 +126,4 @@ export async function softDelete(link: string): Promise<Survey | undefined> {
     return await surveyToSoftDelete.save();
   }
 }
+
