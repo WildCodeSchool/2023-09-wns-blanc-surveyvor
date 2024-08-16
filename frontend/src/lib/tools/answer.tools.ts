@@ -1,8 +1,14 @@
 import { OnSubmitAnswersType } from "@/types/onSubmitAnswers.type";
-import { QuestionForAnswerPage } from "@/types/questionForAnswerPage.type";
+import {
+  Answer,
+  OptionCount,
+  QuestionForAnswerPage,
+} from "@/types/questionForAnswerPage.type";
 import { delay } from "./delay.tools";
 import { TIME_TOAST } from "@/pages/answers/[link]";
 import { FormEvent } from "react";
+import { getColorFromName } from "./randomColor.tools";
+import { Question } from "@/types/question.type";
 
 export const getNumberOfQuestions = (
   questions: QuestionForAnswerPage[] | undefined,
@@ -194,5 +200,42 @@ export const onSubmitAnswers = (
       }
     });
   }
+};
+
+export const countOptions = (
+  answers: Answer[] | null,
+  question: Question
+): { name: string; value: number; fill: string; percentage: string }[] => {
+  const options = question.options?.map((option) => option.content) || [];
+
+  console.log("options", options);
+
+  const optionCounts: { [key: string]: OptionCount } = {};
+
+  options.forEach((option) => {
+    optionCounts[option] = {
+      value: 0,
+      fill: getColorFromName(option),
+    };
+  });
+
+  answers?.forEach((answer) => {
+    answer.selectedOptions?.forEach((option, index) => {
+      const optionName = option.content;
+      optionCounts[optionName].value++;
+    });
+  });
+
+  const total = Object.values(optionCounts).reduce(
+    (sum, option) => sum + option.value,
+    0
+  );
+
+  return Object.keys(optionCounts).map((key) => ({
+    name: key,
+    value: optionCounts[key].value,
+    fill: optionCounts[key].fill,
+    percentage: ((optionCounts[key].value / total) * 100).toFixed(0),
+  }));
 };
 

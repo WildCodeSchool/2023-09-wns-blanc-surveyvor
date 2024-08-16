@@ -1,4 +1,5 @@
 import { IconName } from "./iconName.type";
+import { Option } from "./question.type";
 
 export type QuestionForAnswerPage = {
   id: string;
@@ -21,6 +22,12 @@ export type Answer = {
   id: string;
   content: string;
   questionId: string;
+  selectedOptions: Option[] | null;
   sort: number;
 };
+
+export interface OptionCount {
+  value: number;
+  fill: string;
+}
 

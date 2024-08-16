@@ -155,6 +155,7 @@ export const GET_SURVEY_ANSWERS = gql`
         description
         defaultQuestion
         answers {
+          id
           content
           selectedOptions {
             content

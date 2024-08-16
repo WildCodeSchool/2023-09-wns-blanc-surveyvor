@@ -23,8 +23,9 @@
 @use "../components/Modal/Modal.scss";
 @use "../components/CardMenu/CardMenu.scss";
 @use "../components/SurveyCard/SurveyCard.scss";
-@use "../components/Results/TextQuestionResults.scss";
-@use "../components/Results/MultipleChoiceQuestionResults.scss";
+@use "../components/Results/Text/TextQuestionResults.scss";
+@use "../components/Results/MultipleChoice/MultipleChoiceQuestionResults.scss";
+@use "../components/Results/SingleChoice/SingleChoiceQuestionResults.scss";
 
 // Use pages styles
 @use "pages/NewSurvey.scss";

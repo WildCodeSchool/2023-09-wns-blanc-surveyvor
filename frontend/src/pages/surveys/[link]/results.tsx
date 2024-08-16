@@ -1,6 +1,7 @@
 import Icon from "@/components/Icon/Icon";
-import MultipleChoiceQuestionResults from "@/components/Results/MultipleChoiceQuestionResults";
-import TextQuestionResults from "@/components/Results/TextQuestionResults";
+import MultipleChoiceQuestionResults from "@/components/Results/MultipleChoice/MultipleChoiceQuestionResults";
+import SingleChoiceQuestionResults from "@/components/Results/SingleChoice/SingleChoiceQuestionResults";
+import TextQuestionResults from "@/components/Results/Text/TextQuestionResults";
 import NavLayout from "@/layouts/NavLayout";
 import { GET_SUBMISSIONS_BY_SURVEY_LINK } from "@/lib/queries/submission.queries";
 import {
@@ -51,9 +52,6 @@ function Results() {
     return <div>Error</div>;
   }
 
-  console.log("survey", surveyData);
-
-  const questions: any = [1, 2, 1];
   return (
     <div className="results">
       <section className="survey-info">
@@ -72,6 +70,10 @@ function Results() {
         </button>
       </section>
       {surveyData.getSurveyByLink.question.map((question: Question) => {
+        const props = {
+          question: question,
+          answers: question.answers,
+        };
         return (
           <section className="question-results" key={question.id}>
             <div className="question-header">
@@ -87,7 +89,11 @@ function Results() {
             )}
 
             {question.type.type === "checkboxes" && (
-              <MultipleChoiceQuestionResults answers={question.answers} />
+              <MultipleChoiceQuestionResults {...props} />
+            )}
+
+            {question.type.type === "radio" && (
+              <SingleChoiceQuestionResults {...props} />
             )}
           </section>
         );

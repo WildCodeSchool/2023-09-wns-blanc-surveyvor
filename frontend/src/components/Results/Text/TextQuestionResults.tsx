@@ -1,6 +1,6 @@
 import { Answer } from "@/types/questionForAnswerPage.type";
 import { useState } from "react";
-import Icon from "../Icon/Icon";
+import Icon from "../../Icon/Icon";
 
 export interface TextQuestionResultsProps {
   answers: Answer[] | null;
