@@ -15,6 +15,8 @@ function HorizontalBars({
   answers,
   question,
 }: MultipleChoiceQuestionResultsProps) {
+  if (!answers) return null;
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart

@@ -138,8 +138,6 @@ export const onSubmitAnswers = (
             contentToSend = answersInValue[0];
           }
           try {
-            console.log(submissionId);
-
             await postAnswer({
               variables: {
                 user: token,
@@ -207,8 +205,6 @@ export const countOptions = (
   question: Question
 ): { name: string; value: number; fill: string; percentage: string }[] => {
   const options = question.options?.map((option) => option.content) || [];
-
-  console.log("options", options);
 
   const optionCounts: { [key: string]: OptionCount } = {};
 

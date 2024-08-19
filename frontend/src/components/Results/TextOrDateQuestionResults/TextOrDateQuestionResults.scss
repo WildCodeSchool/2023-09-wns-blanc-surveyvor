@@ -1,0 +1,21 @@
+@use "../../../styles/elements/typography" as *;
+@use "../../../styles/elements/shadows" as *;
+
+.text-answers {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .answer-container {
+    display: flex;
+    justify-content: space-between;
+    color: var(--grey-700);
+    border: 1px solid var(--grey-200);
+    background-color: var(--white);
+    @include text(sm);
+    @include shadow("xs");
+    border-radius: 8px;
+    padding: 10px 16px;
+  }
+}
+

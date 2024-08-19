@@ -1,15 +1,11 @@
 import Icon from "@/components/Icon/Icon";
+import TextOrDateQuestionResults from "@/components/Results/TextOrDateQuestionResults/TextOrDateQuestionResults";
 import MultipleChoiceQuestionResults from "@/components/Results/MultipleChoice/MultipleChoiceQuestionResults";
 import SingleChoiceQuestionResults from "@/components/Results/SingleChoice/SingleChoiceQuestionResults";
-import TextQuestionResults from "@/components/Results/Text/TextQuestionResults";
 import NavLayout from "@/layouts/NavLayout";
 import { GET_SUBMISSIONS_BY_SURVEY_LINK } from "@/lib/queries/submission.queries";
-import {
-  GET_SURVEY_ANSWERS,
-  GET_SURVEY_BY_LINK,
-} from "@/lib/queries/survey.queries";
+import { GET_SURVEY_ANSWERS } from "@/lib/queries/survey.queries";
 import { Question } from "@/types/question.type";
-import { Answer } from "@/types/questionForAnswerPage.type";
 import { Submission } from "@/types/submission.type";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -84,8 +80,9 @@ function Results() {
               <p className="description">{question.description}</p>
             </div>
 
-            {question.type.type === "text" && (
-              <TextQuestionResults answers={question.answers} />
+            {(question.type.type === "text" ||
+              question.type.type === "date") && (
+              <TextOrDateQuestionResults answers={question.answers} />
             )}
 
             {question.type.type === "checkboxes" && (
@@ -95,6 +92,10 @@ function Results() {
             {question.type.type === "radio" && (
               <SingleChoiceQuestionResults {...props} />
             )}
+
+            {/* {question.type.type === "checkbox" && (
+              <CheckQuestionResults {...props} />
+            )} */}
           </section>
         );
       })}

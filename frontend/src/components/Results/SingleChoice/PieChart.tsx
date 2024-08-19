@@ -20,7 +20,7 @@ type CustomizedLabel = {
 };
 
 function PieCh({ answers, question }: SingleChoiceQuestionResultsProps) {
-  console.log(countOptions(answers, question));
+  if (!answers) return null;
 
   const data = countOptions(answers, question).map((entry) => ({
     ...entry,

@@ -8,6 +8,7 @@ export type QuestionForAnswerPage = {
   description: string;
   isOpen: boolean;
   options: Answer[] | undefined;
+  answers?: Answer[] | undefined;
   isError: boolean;
   sort: number;
 };

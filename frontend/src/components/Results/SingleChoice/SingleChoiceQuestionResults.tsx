@@ -4,7 +4,7 @@ import { Answer } from "@/types/questionForAnswerPage.type";
 import { Question } from "@/types/question.type";
 
 export interface SingleChoiceQuestionResultsProps {
-  answers: Answer[] | null;
+  answers?: Answer[] | null;
   question: Question;
 }
 function SingleChoiceQuestionResults({

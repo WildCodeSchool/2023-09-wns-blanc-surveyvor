@@ -9,7 +9,7 @@ export type Question = {
   description: string;
   isOpen: boolean;
   options: Option[] | undefined;
-  answers: Answer[] | null;
+  answers?: Answer[] | null;
 };
 
 export type QuestionType = {
