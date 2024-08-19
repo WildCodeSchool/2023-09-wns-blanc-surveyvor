@@ -10,6 +10,7 @@ import { Submission } from "@/types/submission.type";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
+import CheckQuestionResults from "@/components/Results/CheckQuestionResults/CheckQuestionResults";
 
 function Results() {
   const [submissions, setSubmisions] = useState<Submission[]>([]);
@@ -93,9 +94,9 @@ function Results() {
               <SingleChoiceQuestionResults {...props} />
             )}
 
-            {/* {question.type.type === "checkbox" && (
+            {question.type.type === "checkbox" && (
               <CheckQuestionResults {...props} />
-            )} */}
+            )}
           </section>
         );
       })}

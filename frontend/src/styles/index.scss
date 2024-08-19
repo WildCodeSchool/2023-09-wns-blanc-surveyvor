@@ -27,6 +27,7 @@
 @use "../components/Results/SingleChoice/SingleChoiceQuestionResults.scss";
 @use "../components/Results/TextOrDateQuestionResults/TextOrDateQuestionResults.scss";
 @use "../components/Pagination/Pagination.scss";
+@use "../components/Results/CheckQuestionResults/CheckQuestionResults.scss";
 
 // Use pages styles
 @use "pages/NewSurvey.scss";
