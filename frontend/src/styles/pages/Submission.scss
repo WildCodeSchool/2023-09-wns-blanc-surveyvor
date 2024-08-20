@@ -42,6 +42,37 @@
     }
   }
 
+  .pagination {
+    align-self: center;
+    margin-bottom: 2rem;
+    background-color: #ffffffaa;
+
+    & > a {
+      @include text("sm", $font: $font-family-accent, $weight: 400);
+      width: 2rem;
+      aspect-ratio: 1;
+      display: grid;
+      place-content: center;
+      color: var(--grey-950);
+      text-decoration: none;
+
+      &:not(:last-child) {
+        border-right: 1px solid var(--grey-200);
+      }
+
+      &.active {
+        font-weight: bold;
+        color: var(--primary-700);
+        background-color: var(--primary-100);
+      }
+
+      &.disabled {
+        pointer-events: none;
+        color: var(--grey-300);
+      }
+    }
+  }
+
   .submission {
     .question-answer {
       display: flex;

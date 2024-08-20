@@ -9,10 +9,6 @@ export async function getSubmissionsBySurveyLink(surveyLink: string) {
   });
 }
 
-async function getSubmissionCount(surveyLink: string) {
-  return await Submission.count({ where: { survey: { link: surveyLink } } });
-}
-
 export async function getSubmissionByCount(count: number, surveyLink: string) {
   const submission = await Submission.findOne({
     where: { count: count, survey: { link: surveyLink } },
@@ -56,5 +52,9 @@ export async function postSubmission(
   } catch (error) {
     throw error;
   }
+}
+
+export async function getSubmissionCount(surveyLink: string) {
+  return await Submission.count({ where: { survey: { link: surveyLink } } });
 }
 

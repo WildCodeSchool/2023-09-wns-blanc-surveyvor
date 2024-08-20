@@ -20,8 +20,6 @@ function Pagination({
 
   const totalPages = Math.ceil(answers.length / answersPerPage);
 
-  console.log(totalPages);
-
   return (
     <div className="pagination">
       <button

@@ -4,9 +4,10 @@ import { EditSurveyInputType } from "../types/EditSurveyInputType";
 import { cryptoHash } from "../tools/hash.tools";
 import { SurveyState } from "../entities/surveyState";
 import { getSurveyStateByName } from "./surveyState.service";
+import { getSubmissionCount } from "./submission.service";
 
-export function findSurveyByLink(link: string): Promise<Survey | null> {
-  return Survey.findOne({
+export async function findSurveyByLink(link: string): Promise<Survey | null> {
+  const survey = await Survey.findOne({
     where: {
       link: link,
     },
@@ -24,6 +25,12 @@ export function findSurveyByLink(link: string): Promise<Survey | null> {
       },
     },
   });
+
+  if (!survey) {
+    throw new Error("Survey not found");
+  }
+
+  return survey;
 }
 
 export function findSurveysByOwner(user: User): Promise<Survey[] | null> {

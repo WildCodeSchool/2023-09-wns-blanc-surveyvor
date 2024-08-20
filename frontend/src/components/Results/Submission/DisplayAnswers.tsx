@@ -36,7 +36,6 @@ function DisplayAnswers({ question, answer }: DisplayAnswersProps) {
     return (
       <ul>
         {question.options?.map((option) => {
-          console.log("option", option);
           const selectedAnswer = answer.selectedOptions?.find(
             (selectedOption) => selectedOption.id === option.id
           );
