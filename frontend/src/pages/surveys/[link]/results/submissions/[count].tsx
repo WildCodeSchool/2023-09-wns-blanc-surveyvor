@@ -1,5 +1,5 @@
 import Icon from "@/components/Icon/Icon";
-import Pagination from "@/components/Pagination/Pagination";
+import Header from "@/components/Results/Header/ResultsHeader";
 import DisplayAnswers from "@/components/Results/Submission/DisplayAnswers";
 import NavLayout from "@/layouts/NavLayout";
 import { GET_SUBMISSION_BY_COUNT } from "@/lib/queries/submission.queries";
@@ -106,20 +106,25 @@ function Submission() {
 
   const totalPages = numberOfSubmissions.getNumberOfSubmissions;
   const currentPage = Number(count);
+  const maxVisibleButtons = 8;
+  const halfMax = Math.floor(maxVisibleButtons / 2);
 
-  console.log("currentPage", currentPage);
+  let startPage = Math.max(currentPage - halfMax, 1);
+  let endPage = Math.min(currentPage + halfMax, totalPages);
+
+  if (currentPage <= halfMax) {
+    endPage = Math.min(maxVisibleButtons, totalPages);
+  } else if (currentPage > totalPages - halfMax) {
+    startPage = Math.max(totalPages - maxVisibleButtons + 1, 1);
+  }
 
   return (
     <div className="submission-results">
-      <section className="survey-info">
-        <div className="info-header">
-          <h2>{surveyData.getSurveyByLink.title}</h2>
-          {surveyData.getSurveyByLink.private && (
-            <Icon name="lock" width="16" />
-          )}
-        </div>
-        <p className="description">{surveyData.getSurveyByLink.description}</p>
-      </section>
+      <Header
+        surveyData={surveyData.getSurveyByLink}
+        linkPath={`/surveys/${link}/results`}
+        linkText="Retour aux statistiques"
+      />
 
       <div className="pagination">
         <Link
@@ -130,14 +135,17 @@ function Submission() {
           <Icon name="arrow-left-small" width="20" />
         </Link>
 
-        {[...Array(totalPages)].map((_, index) => (
-          <Link
-            className={currentPage === index + 1 ? "active" : ""}
-            key={index}
-            href={`/surveys/${link}/results/submissions/${index + 1}`}>
-            {index + 1}
-          </Link>
-        ))}
+        {[...Array(endPage - startPage + 1)].map((_, index) => {
+          const page = startPage + index;
+          return (
+            <Link
+              className={currentPage === page ? "active" : ""}
+              key={index}
+              href={`/surveys/${link}/results/submissions/${index + 1}`}>
+              {page}
+            </Link>
+          );
+        })}
 
         <Link
           href={`/surveys/${link}/results/submissions/${currentPage + 1}`}

@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 import CheckQuestionResults from "@/components/Results/CheckQuestionResults/CheckQuestionResults";
 import Link from "next/link";
+import ResultsHeader from "@/components/Results/Header/ResultsHeader";
 
 function Results() {
   const router = useRouter();
@@ -35,23 +36,12 @@ function Results() {
 
   return (
     <div className="results">
-      <section className="survey-info">
-        <div className="info-header">
-          <h2>{surveyData.getSurveyByLink.title}</h2>
-          {surveyData.getSurveyByLink.private && (
-            <Icon name="lock" width="16" />
-          )}
-          <button className="button-sm-primary-outline">
-            <Icon name="pen-clip" width="16" />
-          </button>
-        </div>
-        <p className="description">{surveyData.getSurveyByLink.description}</p>
-        <Link
-          href={`/surveys/${link}/results/submissions/1`}
-          className="button-md-primary-solid">
-          Consulter chaque réponse
-        </Link>
-      </section>
+      <ResultsHeader
+        surveyData={surveyData.getSurveyByLink}
+        linkPath={`/surveys/${link}/results/submissions/1`}
+        linkText="Consulter chaque réponse"
+      />
+
       {surveyData.getSurveyByLink.question.map((question: Question) => {
         const props = {
           question: question,

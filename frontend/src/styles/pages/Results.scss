@@ -19,23 +19,6 @@
     border: 1px solid var(--grey-200);
   }
 
-  .survey-info {
-    .info-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
-      > h2 {
-        width: 100%;
-        @include title("sm", $font: $font-family-accent, $weight: 500);
-      }
-
-      > button {
-        aspect-ratio: 1;
-      }
-    }
-  }
-
   .question-results {
     .question-header .title {
       display: flex;

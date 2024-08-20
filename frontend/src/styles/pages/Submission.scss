@@ -29,19 +29,6 @@
     }
   }
 
-  .survey-info {
-    margin-bottom: 2rem;
-    .info-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
-      > h2 {
-        @include title("sm", $font: $font-family-accent, $weight: 500);
-      }
-    }
-  }
-
   .pagination {
     align-self: center;
     margin-bottom: 2rem;
