@@ -3,18 +3,15 @@ import TextOrDateQuestionResults from "@/components/Results/TextOrDateQuestionRe
 import MultipleChoiceQuestionResults from "@/components/Results/MultipleChoice/MultipleChoiceQuestionResults";
 import SingleChoiceQuestionResults from "@/components/Results/SingleChoice/SingleChoiceQuestionResults";
 import NavLayout from "@/layouts/NavLayout";
-import { GET_SUBMISSIONS_BY_SURVEY_LINK } from "@/lib/queries/submission.queries";
 import { GET_SURVEY_ANSWERS } from "@/lib/queries/survey.queries";
 import { Question } from "@/types/question.type";
-import { Submission } from "@/types/submission.type";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 import CheckQuestionResults from "@/components/Results/CheckQuestionResults/CheckQuestionResults";
+import Link from "next/link";
 
 function Results() {
-  const [submissions, setSubmisions] = useState<Submission[]>([]);
-
   const router = useRouter();
   const link = router.query.link;
 
@@ -28,24 +25,11 @@ function Results() {
     },
   });
 
-  const {
-    data: submissionData,
-    loading: submissionLoading,
-    error: submissionError,
-  } = useQuery(GET_SUBMISSIONS_BY_SURVEY_LINK, {
-    variables: {
-      surveyLink: link,
-    },
-    onCompleted: (data) => {
-      setSubmisions(data.getSubmissionsBySurveyLink);
-    },
-  });
-
-  if (surveyLoading || submissionLoading) {
+  if (surveyLoading) {
     return <div>Loading...</div>;
   }
 
-  if (surveyError || submissionError) {
+  if (surveyError) {
     return <div>Error</div>;
   }
 
@@ -62,9 +46,11 @@ function Results() {
           </button>
         </div>
         <p className="description">{surveyData.getSurveyByLink.description}</p>
-        <button className="button-md-primary-solid">
+        <Link
+          href={`/surveys/${link}/results/submissions/1`}
+          className="button-md-primary-solid">
           Consulter chaque réponse
-        </button>
+        </Link>
       </section>
       {surveyData.getSurveyByLink.question.map((question: Question) => {
         const props = {

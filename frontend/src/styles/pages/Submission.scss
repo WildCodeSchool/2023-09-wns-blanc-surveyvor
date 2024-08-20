@@ -1,0 +1,91 @@
+@use "../elements/shadows" as *;
+@use "../elements/typography" as *;
+
+.submission-results {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    @include shadow("xs");
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--grey-200);
+  }
+
+  .submission-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include title("md", $font: $font-family-accent, $weight: 500);
+
+    span {
+      @include text("xl", $font: $font-family-accent, $weight: 400);
+      color: var(--grey-500);
+    }
+  }
+
+  .survey-info {
+    margin-bottom: 2rem;
+    .info-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      > h2 {
+        @include title("sm", $font: $font-family-accent, $weight: 500);
+      }
+    }
+  }
+
+  .submission {
+    .question-answer {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      .question-header .title {
+        display: flex;
+        gap: 1rem;
+
+        @include text("xl", $font: $font-family-accent, $weight: 500);
+      }
+
+      > p {
+        color: var(--success-600);
+      }
+
+      > ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        li {
+          display: flex;
+          gap: 1rem;
+          color: var(--grey-300);
+
+          .empty-checkbox,
+          .empty-radio {
+            width: 14px;
+            height: 14px;
+            border: 1px solid var(--grey-300);
+          }
+          .empty-checkbox {
+            border-radius: 3px;
+          }
+          .empty-radio {
+            border-radius: 50%;
+          }
+          &.selected {
+            color: var(--success-600);
+          }
+        }
+      }
+    }
+  }
+}
+

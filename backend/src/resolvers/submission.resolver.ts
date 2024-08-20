@@ -11,6 +11,14 @@ export class SubmissionResolver {
     return SubmissionService.getSubmissionsBySurveyLink(surveyLink);
   }
 
+  @Query(() => Submission)
+  getSubmissionByCount(
+    @Arg("count") count: number,
+    @Arg("surveyLink") surveyLink: string
+  ): Promise<Submission> {
+    return SubmissionService.getSubmissionByCount(count, surveyLink);
+  }
+
   @Mutation(() => Submission)
   postSubmission(
     @Arg("surveyLink") surveyLink: string,

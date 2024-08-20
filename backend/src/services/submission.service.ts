@@ -13,6 +13,23 @@ async function getSubmissionCount(surveyLink: string) {
   return await Submission.count({ where: { survey: { link: surveyLink } } });
 }
 
+export async function getSubmissionByCount(count: number, surveyLink: string) {
+  const submission = await Submission.findOne({
+    where: { count: count, survey: { link: surveyLink } },
+    relations: {
+      user: true,
+      survey: true,
+      answer: { question: true, selectedOptions: true },
+    },
+  });
+
+  if (!submission) {
+    throw new Error("Submission not found");
+  }
+
+  return submission;
+}
+
 export async function postSubmission(
   userToken: string | null,
   surveyLink: string
