@@ -12,6 +12,7 @@ import { SurveyStateResolver } from "../resolvers/surveyState.resolver";
 import { ApolloServerPluginLandingPageDisabled } from "apollo-server-core";
 import { dataSourceTest } from "./dbTest";
 import { AnswerResolver } from "../resolvers/answer.resolver";
+import { SubmissionResolver } from "../resolvers/submission.resolver";
 
 async function createServerTest(
   customContext: any = undefined
@@ -27,6 +28,7 @@ async function createServerTest(
       SurveyStateResolver,
       UserResolver,
       AnswerResolver,
+      SubmissionResolver,
     ],
     validate: { forbidUnknownValues: false },
     authChecker: async ({ context }, roles) => {
@@ -91,3 +93,4 @@ async function createServerTest(
 }
 
 export default createServerTest;
+

@@ -58,13 +58,19 @@ function SignIn() {
           value={password}
           setValue={setPassword}
         />
+        <Link className="button-md-grey-link" href={"/forgot-password"}>
+          Mot de passe oublié?
+        </Link>
         <button className="button-md-primary-solid" type="submit">
           Se connecter
         </button>
       </form>
 
       <p className="no-account">
-        Pas encore inscrit·e ? <Link href="/signup">S’inscrire</Link>
+        Pas encore inscrit·e ?
+        <Link href="/signup" className="button-md-grey-link">
+          S’inscrire
+        </Link>
       </p>
     </div>
   );

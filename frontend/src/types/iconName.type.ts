@@ -23,4 +23,10 @@ export type IconName =
   | "sign-out"
   | "paper-plane-top"
   | "cross"
+  | "eye"
+  | "eye-crossed"
+  | "warning"
+  | "attribution-pencil"
+  | "chart-histogram"
   | "";
+

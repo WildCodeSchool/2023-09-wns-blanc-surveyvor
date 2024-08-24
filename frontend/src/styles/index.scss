@@ -21,7 +21,12 @@
 @use "components/Answer/AnswerCheckboxQuestion.scss";
 @use "../components/Dropdown/Dropdown.scss"; // Use pages styles
 @use "../components/Modal/Modal.scss";
+@use "../components/CardMenu/CardMenu.scss";
+@use "../components/SurveyCard/SurveyCard.scss";
 @use "pages/NewSurvey.scss";
 @use "pages/Access.scss";
 @use "pages/Home.scss";
 @use "pages/Answer.scss";
+@use "pages/Profile.scss";
+@use "pages/Results.scss";
+

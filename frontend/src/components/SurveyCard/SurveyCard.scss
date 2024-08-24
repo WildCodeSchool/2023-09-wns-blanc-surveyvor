@@ -1,0 +1,67 @@
+.survey-card {
+  flex-direction: column;
+  gap: calc(var(--gap) * 0.25);
+  padding: calc(var(--gap) * 0.5);
+  background-color: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--grey-200);
+  text-decoration: none;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    color: var(--grey-700);
+    gap: 8px;
+
+    &.private {
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 8px;
+    }
+
+    .mode {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--grey-500);
+      margin-left: auto;
+    }
+
+    .filters-container {
+      width: fit-content;
+      justify-self: end;
+
+      .settings {
+        width: 2rem;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        &:hover {
+          background-color: var(--grey-100);
+        }
+      }
+    }
+  }
+
+  .title {
+    color: var(--grey-800);
+  }
+
+  .description {
+    color: var(--grey-600);
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+
+  .creation-date {
+    color: var(--grey-500);
+    align-self: flex-end;
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+  }
+}
+

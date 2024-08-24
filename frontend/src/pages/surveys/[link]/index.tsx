@@ -156,8 +156,7 @@ function NewSurvey() {
               display: "flex",
               flexDirection: "column",
               gap: 10,
-            }}
-          >
+            }}>
             {questions.map((question, index) => {
               return (
                 <Reorder.Item key={question.id} value={question}>
@@ -197,3 +196,4 @@ NewSurvey.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default NewSurvey;
+

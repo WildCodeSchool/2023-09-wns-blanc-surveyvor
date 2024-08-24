@@ -9,12 +9,12 @@ export type Survey = {
   archived: boolean;
   private: boolean;
   collectingUserData: boolean;
-  startDate?: string;
-  endDate?: string;
-  deleteDate?: string;
-  creationDate: string;
-  publicationDate?: string;
-  archiveDate?: string;
+  startDate?: number;
+  endDate?: number;
+  deleteDate?: number;
+  creationDate: number;
+  publicationDate?: number;
+  archiveDate?: number;
   state: SurveyState;
   question: Question[];
 };

@@ -6,12 +6,14 @@ export const POST_ANSWER = gql`
     $option: [String!]
     $question: String!
     $content: String!
+    $submission: String!
   ) {
     createAnswer(
       user: $user
       option: $option
       question: $question
       content: $content
+      submission: $submission
     ) {
       question {
         id
@@ -19,3 +21,4 @@ export const POST_ANSWER = gql`
     }
   }
 `;
+

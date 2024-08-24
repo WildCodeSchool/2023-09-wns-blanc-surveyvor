@@ -27,10 +27,18 @@
     button {
       align-self: flex-end;
     }
+
+    a {
+      justify-content: flex-start;
+      width: fit-content;
+    }
   }
 
   .existing-account,
   .no-account {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
   }
 }
+

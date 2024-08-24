@@ -3,7 +3,6 @@ import {
   displayState,
 } from "@/lib/tools/survey.tools";
 import { IconName } from "@/types/iconName.type";
-import { title } from "process";
 
 describe("displayState Fn", () => {
   it("should return the right translated state", () => {
@@ -34,7 +33,7 @@ describe("displayNumberOfQuestions Fn", () => {
       archived: false,
       private: false,
       collectingUserData: false,
-      creationDate: new Date(),
+      creationDate: new Date().getTime(),
       state: { id: 1, state: "in-progress", color: "#000000" },
       question: [
         {
@@ -45,6 +44,7 @@ describe("displayNumberOfQuestions Fn", () => {
             type: "text",
             icon: "search" as IconName,
           },
+          sort: 1,
           description: "Description 1",
           isOpen: true,
           answer: undefined,
@@ -57,6 +57,7 @@ describe("displayNumberOfQuestions Fn", () => {
             type: "text",
             icon: "trash" as IconName,
           },
+          sort: 2,
           description: "Description 2",
           isOpen: true,
           answer: undefined,
@@ -71,7 +72,7 @@ describe("displayNumberOfQuestions Fn", () => {
       archived: false,
       private: false,
       collectingUserData: false,
-      creationDate: new Date(),
+      creationDate: new Date().getTime(),
       state: { id: 1, state: "in-progress", color: "#000000" },
       question: [],
     };

@@ -9,6 +9,7 @@ import Icon from "@/components/Icon/Icon";
 import Modal from "@/components/Modal/Modal";
 import NavLayout from "@/layouts/NavLayout";
 import { POST_ANSWER } from "@/lib/queries/answer.queries";
+import { POST_SUBMISSION } from "@/lib/queries/submission.queries";
 import { GET_SURVEY_BY_LINK } from "@/lib/queries/survey.queries";
 import {
   getNumberOfQuestions,
@@ -57,6 +58,8 @@ function AnswerSurvey() {
     content: "",
   });
   const [pendingAction, setPendingAction] = useState<() => void>(() => {});
+
+  const [submissionId, setSubmissionId] = useState<string>("");
 
   const [getSurveyByLink, { loading, error }] =
     useLazyQuery(GET_SURVEY_BY_LINK);
@@ -113,26 +116,50 @@ function AnswerSurvey() {
     [questions, defaultQuestions]
   );
 
+  const [postSubmission] = useMutation(POST_SUBMISSION);
   const [postAnswer] = useMutation(POST_ANSWER);
 
+  const token = localStorage.getItem("token");
+
   const callbackOnSubmit = useCallback(
-    (event: FormEvent) =>
-      onSubmitAnswers(
-        {
-          questions,
-          setQuestions,
-          defaultQuestions,
-          setDefaultQuestions,
-          callbackGetNumberOfQuestions,
-          postAnswer,
-          setPendingAction,
-          checkboxQuestion,
-          setModal,
-          Toast,
-          router,
-        },
-        event
-      ),
+    (event: FormEvent) => {
+      event.preventDefault();
+
+      try {
+        postSubmission({
+          variables: {
+            surveyLink: link,
+            user: token,
+          },
+          onCompleted: (data) => {
+            // setSubmissionId(data.postSubmission.id);
+
+            onSubmitAnswers(
+              {
+                questions,
+                setQuestions,
+                defaultQuestions,
+                setDefaultQuestions,
+                callbackGetNumberOfQuestions,
+                postAnswer,
+                setPendingAction,
+                checkboxQuestion,
+                setModal,
+                Toast,
+                router,
+                token,
+                submissionId: data.postSubmission.id,
+              },
+              event
+            );
+          },
+        });
+
+        console.log("submissionId", submissionId);
+      } catch (error) {
+        console.error("An error occurred while posting submission", error);
+      }
+    },
     [
       questions,
       defaultQuestions,
@@ -192,8 +219,7 @@ function AnswerSurvey() {
                     className={`answer-container ${
                       question.isError ? "is-error" : ""
                     }`}
-                    key={question.id}
-                  >
+                    key={question.id}>
                     {question.type.type !== "checkbox" && (
                       <p className="answer-title">{question.title}</p>
                     )}
@@ -223,8 +249,7 @@ function AnswerSurvey() {
         <Modal
           title={modal.content}
           isOpen={modal.isOpen}
-          setIsOpen={() => setModal({ isOpen: false, content: "" })}
-        >
+          setIsOpen={() => setModal({ isOpen: false, content: "" })}>
           <div className="buttons">
             <button
               type="button"
@@ -232,14 +257,12 @@ function AnswerSurvey() {
                 pendingAction();
                 setModal({ isOpen: false, content: "" });
               }}
-              className="button-md-error-solid"
-            >
+              className="button-md-error-solid">
               Confirmer
             </button>
             <button
               onClick={() => setModal({ isOpen: false, content: "" })}
-              className="button-md-primary-outline"
-            >
+              className="button-md-primary-outline">
               Annuler
             </button>
           </div>
@@ -265,3 +288,4 @@ AnswerSurvey.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default AnswerSurvey;
+
