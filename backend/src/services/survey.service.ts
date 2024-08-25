@@ -33,8 +33,8 @@ export async function findSurveyByLink(link: string): Promise<Survey | null> {
   return survey;
 }
 
-export function findSurveysByOwner(user: User): Promise<Survey[] | null> {
-  return Survey.find({
+export async function findSurveysByOwner(user: User): Promise<Survey[] | null> {
+  const survey = Survey.find({
     where: {
       user: { id: user.id },
     },
@@ -46,6 +46,12 @@ export function findSurveysByOwner(user: User): Promise<Survey[] | null> {
       creationDate: "DESC",
     },
   });
+
+  if (!survey) {
+    throw new Error("Survey not found");
+  }
+
+  return survey;
 }
 
 export function findSurveyByState(user: User, state: string) {
