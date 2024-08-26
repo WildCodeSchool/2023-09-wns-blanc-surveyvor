@@ -4,7 +4,6 @@ import { EditSurveyInputType } from "../types/EditSurveyInputType";
 import { cryptoHash } from "../tools/hash.tools";
 import { SurveyState } from "../entities/surveyState";
 import { getSurveyStateByName } from "./surveyState.service";
-import { getSubmissionCount } from "./submission.service";
 
 export async function findSurveyByLink(link: string): Promise<Survey | null> {
   const survey = await Survey.findOne({
@@ -16,7 +15,7 @@ export async function findSurveyByLink(link: string): Promise<Survey | null> {
       question: {
         options: true,
         type: true,
-        answers: { selectedOptions: true },
+        answers: { selectedOptions: true, submission: true },
       },
     },
     order: {

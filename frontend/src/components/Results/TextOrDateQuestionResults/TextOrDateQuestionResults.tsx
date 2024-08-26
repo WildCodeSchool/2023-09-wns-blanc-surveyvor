@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Answer } from "@/types/questionForAnswerPage.type";
 import Pagination from "@/components/Pagination/Pagination";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export interface TextOrDateQuestionResultsProps {
   answers: Answer[] | null | undefined;
@@ -12,6 +14,9 @@ function TextOrDateQuestionResults({
   answers,
 }: TextOrDateQuestionResultsProps) {
   if (!answers) return null;
+
+  const router = useRouter();
+  const { link } = router.query;
 
   const normalizeString = (str: string): string => {
     return str
@@ -55,15 +60,20 @@ function TextOrDateQuestionResults({
   return (
     <div className="text-answers">
       {currentAnswers.map((answer: UniqueAnswer) => {
+        console.log(answer);
+
         return (
-          <div className="answer-container" key={answer.id}>
+          <Link
+            href={`/surveys/${link}/results/submissions/${answer.submission.count}`}
+            className="answer-container"
+            key={answer.id}>
             <p>{answer.content}</p>
             {answer.count > 1 && (
               <div className="badge-sm-colored-primary-round">
                 <p>{answer.count} </p>
               </div>
             )}
-          </div>
+          </Link>
         );
       })}
 

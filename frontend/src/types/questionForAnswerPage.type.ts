@@ -1,5 +1,6 @@
 import { IconName } from "./iconName.type";
 import { Option } from "./question.type";
+import { Submission } from "./submission.type";
 
 export type QuestionForAnswerPage = {
   id: string;
@@ -24,6 +25,7 @@ export type Answer = {
   content: string;
   questionId: string;
   selectedOptions: Option[] | null;
+  submission: Submission;
   sort: number;
 };
 

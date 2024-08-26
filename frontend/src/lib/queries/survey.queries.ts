@@ -160,6 +160,9 @@ export const GET_SURVEY_ANSWERS = gql`
           selectedOptions {
             content
           }
+          submission {
+            count
+          }
         }
       }
       state {

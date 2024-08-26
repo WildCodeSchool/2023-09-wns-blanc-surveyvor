@@ -10,12 +10,17 @@
     display: flex;
     justify-content: space-between;
     color: var(--grey-700);
+    text-decoration: none;
     border: 1px solid var(--grey-200);
     background-color: var(--white);
     @include text(sm);
     @include shadow("xs");
     border-radius: 8px;
     padding: 10px 16px;
+
+    &:hover {
+      background-color: var(--grey-100);
+    }
   }
 }
 
