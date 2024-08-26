@@ -13,6 +13,7 @@ function NavHeader({
   profile,
   publish,
   signInOrSignUp,
+  publicForms,
 }: {
   newSurvey?: boolean;
   backToForms?: boolean;
@@ -21,6 +22,7 @@ function NavHeader({
   profile?: boolean;
   publish?: boolean;
   signInOrSignUp?: boolean;
+  publicForms?: boolean;
 }) {
   const [isConnected, setIsConnected] = useState(false);
   const router = useRouter();
@@ -62,10 +64,16 @@ function NavHeader({
         </div>
       )}
       <div className="nav-buttons">
+        {publicForms && (
+          <Link href="/public/forms" className="button-md-primary-solid">
+            <Icon name="unlock" />
+            <span className="hidden-mobile">Formulaires publiques</span>
+          </Link>
+        )}
         {isConnected && backToForms && (
           <button
             className="button-md-grey-outline"
-            onClick={() => router.push("/")}>
+            onClick={() => router.push("/dashboard")}>
             <Icon name="arrow-left" />
             <span className="hidden-mobile">Mes formulaires</span>
           </button>
@@ -99,6 +107,7 @@ function NavHeader({
             <span className="hidden-mobile">Publier</span>
           </button>
         )}
+
         {!isConnected && signInOrSignUp && (
           <>
             <button

@@ -9,6 +9,7 @@ function NavLayout({
   profile,
   publish,
   signInOrSignUp,
+  publicForms,
 }: {
   children: React.ReactNode;
   newSurvey?: boolean;
@@ -18,6 +19,7 @@ function NavLayout({
   profile?: boolean;
   publish?: boolean;
   signInOrSignUp?: boolean;
+  publicForms?: boolean;
 }) {
   return (
     <>
@@ -29,6 +31,7 @@ function NavLayout({
         profile={profile}
         publish={publish}
         signInOrSignUp={signInOrSignUp}
+        publicForms={publicForms}
       />
       <main className="main main-nav">{children}</main>
     </>
