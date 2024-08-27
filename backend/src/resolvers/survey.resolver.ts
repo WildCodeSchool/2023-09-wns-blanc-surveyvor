@@ -13,6 +13,11 @@ export class SurveyResolver {
     return SurveyService.findSurveyByLink(surveyLink);
   }
 
+  @Query(() => [Survey])
+  getPublicSurveys(): Promise<Survey[] | null> {
+    return SurveyService.findPublicSurveys();
+  }
+
   @Authorized()
   @Query(() => [Survey])
   getSurveysByOwner(@Ctx("user") user: User): Promise<Survey[] | null> {

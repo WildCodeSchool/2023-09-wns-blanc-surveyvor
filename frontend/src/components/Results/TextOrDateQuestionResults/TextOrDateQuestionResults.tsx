@@ -60,8 +60,6 @@ function TextOrDateQuestionResults({
   return (
     <div className="text-answers">
       {currentAnswers.map((answer: UniqueAnswer) => {
-        console.log(answer);
-
         return (
           <Link
             href={`/surveys/${link}/results/submissions/${answer.submission.count}`}

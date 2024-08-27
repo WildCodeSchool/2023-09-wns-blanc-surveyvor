@@ -173,3 +173,16 @@ export const GET_SURVEY_ANSWERS = gql`
   }
 `;
 
+export const GET_PUBLIC_SURVEYS = gql`
+  query GetPublicSurveys {
+    getPublicSurveys {
+      title
+      description
+      link
+      publicationDate
+      startDate
+      endDate
+    }
+  }
+`;
+

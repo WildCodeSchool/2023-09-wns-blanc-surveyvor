@@ -64,9 +64,9 @@ export class Survey extends BaseEntity {
   @Field()
   creationDate: string;
 
-  @Column({ nullable: true })
+  @Column({ type: "bigint", nullable: true })
   @Field({ nullable: true })
-  publicationDate?: Date;
+  publicationDate?: string;
 
   @Column({ type: "bigint", nullable: true })
   @Field({ nullable: true })
