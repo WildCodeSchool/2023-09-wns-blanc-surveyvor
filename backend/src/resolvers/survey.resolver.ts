@@ -42,6 +42,11 @@ export class SurveyResolver {
     return SurveyService.edit(link, survey);
   }
 
+  @Mutation(() => Survey)
+  publishSurvey(@Arg("link") link: string): Promise<Survey | undefined> {
+    return SurveyService.publish(link);
+  }
+
   @Authorized()
   @Mutation(() => Survey)
   archiveSurvey(

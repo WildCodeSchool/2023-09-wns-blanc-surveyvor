@@ -144,6 +144,22 @@ export async function edit(
   }
 }
 
+export async function publish(link: string): Promise<Survey | undefined> {
+  const surveyToPublish = await Survey.findOne({
+    where: { link: link },
+    relations: {
+      state: true,
+    },
+  });
+  if (surveyToPublish) {
+    surveyToPublish.publicationDate = new Date().getTime().toString();
+    surveyToPublish.state = (await getSurveyStateByName(
+      "published"
+    )) as SurveyState;
+    return await surveyToPublish.save();
+  }
+}
+
 export async function archive(
   link: string,
   archive: boolean

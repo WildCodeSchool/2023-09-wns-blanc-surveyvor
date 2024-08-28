@@ -14,7 +14,7 @@ import { sortOptions } from "@/lib/data/data";
 import DropdownItem from "@/components/Dropdown/Dropdown";
 import SurveyCard from "@/components/SurveyCard/SurveyCard";
 
-export default function Home() {
+export default function Dashboard() {
   // ----------------------------------States----------------------------------
 
   const [surveys, setSurveys] = useState<Survey[]>([]);
@@ -122,7 +122,7 @@ export default function Home() {
   );
 }
 
-Home.getLayout = function getLayout(page: ReactElement) {
+Dashboard.getLayout = function getLayout(page: ReactElement) {
   return (
     <NavLayout newSurvey profile signOut>
       {page}

@@ -134,7 +134,7 @@ function CardMenu({
           setIsOpen={setIsDeleteModalOpen}>
           <>
             <p>
-              Etes-vous certain de vouloir supprimer le sondage{" "}
+              Etes-vous certain de vouloir supprimer le sondage
               <span className="bold">{survey.title}</span> ?
             </p>
             <div className="modal-actions">

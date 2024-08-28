@@ -186,3 +186,11 @@ export const GET_PUBLIC_SURVEYS = gql`
   }
 `;
 
+export const PUBLISH_SURVEY = gql`
+  mutation PublishSurvey($link: String!) {
+    publishSurvey(link: $link) {
+      link
+    }
+  }
+`;
+
