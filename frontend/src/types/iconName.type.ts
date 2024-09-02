@@ -28,5 +28,7 @@ export type IconName =
   | "warning"
   | "attribution-pencil"
   | "chart-histogram"
+  | "arrow-right-small"
+  | "arrow-left-small"
   | "";
 

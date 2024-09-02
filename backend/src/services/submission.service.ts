@@ -1,5 +1,4 @@
 import { Submission } from "../entities/submission";
-import { User } from "../entities/user";
 import { getMe } from "./auth.service";
 import { findSurveyByLink } from "./survey.service";
 
@@ -10,8 +9,21 @@ export async function getSubmissionsBySurveyLink(surveyLink: string) {
   });
 }
 
-async function getSubmissionCount(surveyLink: string) {
-  return await Submission.count({ where: { survey: { link: surveyLink } } });
+export async function getSubmissionByCount(count: number, surveyLink: string) {
+  const submission = await Submission.findOne({
+    where: { count: count, survey: { link: surveyLink } },
+    relations: {
+      user: true,
+      survey: true,
+      answer: { question: true, selectedOptions: true },
+    },
+  });
+
+  if (!submission) {
+    throw new Error("Submission not found");
+  }
+
+  return submission;
 }
 
 export async function postSubmission(
@@ -40,5 +52,9 @@ export async function postSubmission(
   } catch (error) {
     throw error;
   }
+}
+
+export async function getSubmissionCount(surveyLink: string) {
+  return await Submission.count({ where: { survey: { link: surveyLink } } });
 }
 

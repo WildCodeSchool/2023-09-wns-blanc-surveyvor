@@ -1,4 +1,5 @@
 import { IconName } from "./iconName.type";
+import { Answer } from "./questionForAnswerPage.type";
 
 export type Question = {
   id: string;
@@ -8,6 +9,7 @@ export type Question = {
   description: string;
   isOpen: boolean;
   options: Option[] | undefined;
+  answers?: Answer[] | null;
 };
 
 export type QuestionType = {
@@ -22,3 +24,4 @@ export type Option = {
   // questionId: string;
   sort: number;
 };
+

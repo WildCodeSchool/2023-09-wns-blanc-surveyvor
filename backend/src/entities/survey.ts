@@ -12,6 +12,7 @@ import {
 import { User } from "./user";
 import { SurveyState } from "./surveyState";
 import { Question } from "./question";
+import { Submission } from "./submission";
 
 @ObjectType()
 @Entity()
@@ -95,6 +96,10 @@ export class Survey extends BaseEntity {
   @OneToMany(() => Question, (question) => question.survey)
   question: Question[];
 
+  @Field(() => [Submission], { nullable: true })
+  @OneToMany(() => Submission, (submission) => submission.survey)
+  submissions: Submission[];
+
   constructor(
     datas: {
       title: string;
@@ -112,3 +117,4 @@ export class Survey extends BaseEntity {
     }
   }
 }
+

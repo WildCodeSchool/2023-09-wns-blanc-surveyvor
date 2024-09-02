@@ -1,0 +1,64 @@
+@use "../../../styles/elements/typography" as *;
+
+.checks-results {
+  --padding: 1rem;
+  --circle-width: 2.5em;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(var(--padding) * 2);
+  padding: var(--padding);
+
+  .checked,
+  .unchecked {
+    display: flex;
+    align-items: center;
+
+    .circle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      @include title(xl);
+
+      min-width: var(--circle-width);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      padding: var(--padding);
+
+      outline-offset: calc(var(--padding) * 0.25);
+
+      & > p:first-child {
+        @include title(xl);
+        font-weight: 700;
+      }
+    }
+  }
+
+  .checked {
+    color: var(--green-700);
+
+    .circle {
+      border: calc(var(--padding) * 0.25) solid var(--green-500);
+      outline: calc(var(--padding) / 16) solid var(--green-500);
+    }
+  }
+
+  .unchecked {
+    color: var(--red-800);
+
+    .circle {
+      border: calc(var(--padding) * 0.25) solid var(--red-500);
+      outline: calc(var(--padding) / 16) solid var(--red-500);
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .checks-results {
+    --padding: 2rem;
+    --circle-width: 3.5em;
+  }
+}
+

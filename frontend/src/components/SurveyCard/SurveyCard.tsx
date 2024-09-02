@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Icon from "../Icon/Icon";
 import { Survey } from "@/types/survey.type";
-import CardMenu from "../CardMenu/CardMenu";
+import CardMenu from "./CardMenu";
 import {
   displayNumberOfQuestions,
   displayState,

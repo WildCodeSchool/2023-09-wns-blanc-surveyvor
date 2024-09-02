@@ -116,8 +116,8 @@ export const GET_SURVEY_BY_LINK = gql`
         }
         title
         type {
-          id
           type
+          icon
         }
         description
         defaultQuestion
@@ -130,6 +130,42 @@ export const GET_SURVEY_BY_LINK = gql`
         id
       }
       title
+    }
+  }
+`;
+
+export const GET_SURVEY_ANSWERS = gql`
+  query Query($surveyLink: String!) {
+    getSurveyByLink(surveyLink: $surveyLink) {
+      title
+      description
+      private
+      publicationDate
+      endDate
+      question {
+        id
+        title
+        type {
+          type
+          icon
+        }
+        options {
+          content
+        }
+        description
+        defaultQuestion
+        answers {
+          id
+          content
+          selectedOptions {
+            content
+          }
+        }
+      }
+      state {
+        state
+        color
+      }
     }
   }
 `;

@@ -154,8 +154,6 @@ function AnswerSurvey() {
             );
           },
         });
-
-        console.log("submissionId", submissionId);
       } catch (error) {
         console.error("An error occurred while posting submission", error);
       }

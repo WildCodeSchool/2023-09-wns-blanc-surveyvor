@@ -4,9 +4,10 @@ import { EditSurveyInputType } from "../types/EditSurveyInputType";
 import { cryptoHash } from "../tools/hash.tools";
 import { SurveyState } from "../entities/surveyState";
 import { getSurveyStateByName } from "./surveyState.service";
+import { getSubmissionCount } from "./submission.service";
 
-export function findSurveyByLink(link: string): Promise<Survey | null> {
-  return Survey.findOne({
+export async function findSurveyByLink(link: string): Promise<Survey | null> {
+  const survey = await Survey.findOne({
     where: {
       link: link,
     },
@@ -15,6 +16,7 @@ export function findSurveyByLink(link: string): Promise<Survey | null> {
       question: {
         options: true,
         type: true,
+        answers: { selectedOptions: true },
       },
     },
     order: {
@@ -23,10 +25,16 @@ export function findSurveyByLink(link: string): Promise<Survey | null> {
       },
     },
   });
+
+  if (!survey) {
+    throw new Error("Survey not found");
+  }
+
+  return survey;
 }
 
-export function findSurveysByOwner(user: User): Promise<Survey[] | null> {
-  return Survey.find({
+export async function findSurveysByOwner(user: User): Promise<Survey[] | null> {
+  const survey = Survey.find({
     where: {
       user: { id: user.id },
     },
@@ -38,6 +46,12 @@ export function findSurveysByOwner(user: User): Promise<Survey[] | null> {
       creationDate: "DESC",
     },
   });
+
+  if (!survey) {
+    throw new Error("Survey not found");
+  }
+
+  return survey;
 }
 
 export function findSurveyByState(user: User, state: string) {
@@ -125,3 +139,4 @@ export async function softDelete(link: string): Promise<Survey | undefined> {
     return await surveyToSoftDelete.save();
   }
 }
+
