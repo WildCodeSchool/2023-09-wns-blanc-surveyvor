@@ -2,8 +2,13 @@ import { DeleteResult } from "typeorm";
 import { Role } from "../entities/role";
 import { User } from "../entities/user";
 import * as argon2 from "argon2";
-import { verifyPassword, verifyToken } from "./auth.service";
-import { Payload } from "../types/PayloadType";
+import { verifyPassword } from "./auth.service";
+import jwt from "jsonwebtoken";
+import { InvitationToken } from "../entities/invitationToken";
+import { sendEmail } from "../config/mailer";
+import { ApolloError } from "apollo-server";
+import { Survey } from "../entities/survey";
+import { findSurveyByLink } from "./survey.service";
 
 export async function createUser(
   email: string,
