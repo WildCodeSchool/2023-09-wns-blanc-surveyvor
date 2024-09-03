@@ -45,9 +45,9 @@ function Modal({
         onClick={(e) => e.stopPropagation()}>
         <header className="modal-header">
           <p className="text-xl text--medium">{title}</p>
-          <button className="close" onClick={() => setIsOpen(false)}>
+          {/* <button className="close" onClick={() => setIsOpen(false)}>
             <Icon name="cross" width="16" />
-          </button>
+          </button> */}
         </header>
         {children}
       </div>

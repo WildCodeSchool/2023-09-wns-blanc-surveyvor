@@ -1,10 +1,20 @@
 import Link from "next/link";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import Icon from "../Icon/Icon";
 import { CREATE_SURVEY, PUBLISH_SURVEY } from "@/lib/queries/survey.queries";
 import { useEffect, useState } from "react";
-import Modal from "../Modal/Modal";
+import PublishModal from "../Modal/PublishModal";
+import SendInvitationsModal from "../Modal/SendInvitationsModal";
+
+const GET_SURVEY_POLICY = gql`
+  query GetSurveyByLink($surveyLink: String!) {
+    getSurveyByLink(surveyLink: $surveyLink) {
+      title
+      private
+    }
+  }
+`;
 
 function NavHeader({
   newSurvey,
@@ -31,9 +41,9 @@ function NavHeader({
 
   const { link } = router.query;
 
-  console.log(link);
-
-  const [publishSurvey] = useMutation(PUBLISH_SURVEY);
+  const { data } = useQuery(GET_SURVEY_POLICY, {
+    variables: { surveyLink: link },
+  });
 
   const [createSurvey] = useMutation(CREATE_SURVEY, {
     variables: { title: "Formulaire sans titre" },
@@ -141,44 +151,18 @@ function NavHeader({
         )}
       </div>
 
-      {isModalOpen && (
-        <Modal
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          title="Publier le formulaire?">
-          <>
-            <p>Le formulaire ne pourra plus être modifier.</p>
-            <div className="modal-actions">
-              <button
-                className="button-md-primary-outline"
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsModalOpen(false);
-                }}>
-                Annuler
-              </button>
-              <button
-                className="button-md-error-solid"
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  publishSurvey({
-                    variables: {
-                      link: link,
-                    },
-                    onCompleted: () => {
-                      setIsModalOpen(false);
-                      router.push("/dashboard");
-                    },
-                  });
-                }}>
-                Publier
-              </button>
-            </div>
-          </>
-        </Modal>
-      )}
+      {isModalOpen &&
+        (data?.getSurveyByLink?.private ? (
+          <SendInvitationsModal
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+          />
+        ) : (
+          <PublishModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+          />
+        ))}
     </nav>
   );
 }
