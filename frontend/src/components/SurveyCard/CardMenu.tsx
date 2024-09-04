@@ -7,6 +7,7 @@ import { useMutation } from "@apollo/client";
 import { ARCHIVE_SURVEY, DELETE_SURVEY } from "@/lib/queries/survey.queries";
 import useClickOutside from "@/lib/hooks/useClickOutside";
 import Modal from "../Modal/Modal";
+import SendInvitationsModal from "../Modal/SendInvitationsModal";
 
 function CardMenu({
   survey,
@@ -21,6 +22,8 @@ function CardMenu({
 
   const [isCardMenuOpen, setIsCardMenuOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isInvitationModalOpen, setIsInvitationModalOpen] =
+    useState<boolean>(false);
   const router: NextRouter = useRouter();
   const { ref } = useClickOutside(isCardMenuOpen, setIsCardMenuOpen);
 
@@ -47,6 +50,9 @@ function CardMenu({
       switch (option) {
         case "Modifier":
           return router.push(`/surveys/${survey.link}`);
+
+        case "Inviter":
+          return setIsInvitationModalOpen(true);
 
         case "Archiver":
           return (
@@ -105,26 +111,44 @@ function CardMenu({
           ref={ref as React.RefObject<HTMLDivElement>}
           className="dropdown-wrapper"
           onBlur={() => setIsCardMenuOpen(false)}>
-          {cardMenuOptions.map((option) => (
-            <button
-              key={option.id}
-              className="dropdown-item"
-              type="button"
-              value={option.option}
-              name={option.option}
-              disabled={
-                option.option === "Archiver" &&
-                survey.state.state !== "closed" &&
-                survey.state.state !== "archived"
-              }
-              onClick={(e) => onClick(e, option.option, survey)}>
-              <Icon name={option.icon} height="1rem" width="1rem" />
-              {survey.archived && option.option === "Archiver"
-                ? "Restaurer"
-                : option.option}
-            </button>
-          ))}
+          {cardMenuOptions.map((option) => {
+            const disableArvhive =
+              option.option === "Archiver" &&
+              survey.state.state !== "closed" &&
+              survey.state.state !== "archived";
+
+            const disableEdit =
+              option.option === "Modifier" && survey.state.state !== "draft";
+
+            if (!survey.private && option.option === "Inviter") {
+              return null;
+            }
+
+            return (
+              <button
+                key={option.id}
+                className="dropdown-item"
+                type="button"
+                value={option.option}
+                name={option.option}
+                disabled={disableArvhive || disableEdit}
+                onClick={(e) => onClick(e, option.option, survey)}>
+                <Icon name={option.icon} height="1rem" width="1rem" />
+                {survey.archived && option.option === "Archiver"
+                  ? "Restaurer"
+                  : option.option}
+              </button>
+            );
+          })}
         </div>
+      )}
+
+      {isInvitationModalOpen && (
+        <SendInvitationsModal
+          isModalOpen={isInvitationModalOpen}
+          setIsModalOpen={setIsInvitationModalOpen}
+          link={survey.link}
+        />
       )}
 
       {isDeleteModalOpen && (

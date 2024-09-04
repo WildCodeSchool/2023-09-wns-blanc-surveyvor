@@ -10,7 +10,7 @@ import { SurveyState } from "../entities/surveyState";
 
 import * as dotenv from "dotenv";
 import { Submission } from "../entities/submission";
-import { InvitationToken } from "../entities/invitationToken";
+import { Invitation } from "../entities/invitation";
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ export const dataSourceTest = new DataSource({
     UserAnswer,
     SurveyState,
     Submission,
-    InvitationToken,
+    Invitation,
   ],
   logging: true,
   synchronize: false,

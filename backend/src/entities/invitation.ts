@@ -7,15 +7,16 @@ import {
 } from "typeorm";
 import { User } from "./user";
 import { Field, ObjectType } from "type-graphql";
+import { Survey } from "./survey";
 
 @ObjectType()
 @Entity()
-export class InvitationToken extends BaseEntity {
+export class Invitation extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Field()
-  @Column({ unique: true })
+  @Column()
   invitedEmail: string;
 
   @Field()
@@ -33,6 +34,10 @@ export class InvitationToken extends BaseEntity {
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.id)
   user: User;
+
+  @Field(() => Survey)
+  @ManyToOne(() => Survey, (survey) => survey.id)
+  survey: Survey;
 
   constructor() {
     super();

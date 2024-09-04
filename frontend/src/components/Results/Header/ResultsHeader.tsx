@@ -2,6 +2,7 @@ import Icon from "@/components/Icon/Icon";
 import SendInvitationsModal from "@/components/Modal/SendInvitationsModal";
 import { Survey } from "@/types/survey.type";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 type ResultsHeaderProps = {
@@ -12,8 +13,11 @@ type ResultsHeaderProps = {
 
 function ResultsHeader({ surveyData, linkPath, linkText }: ResultsHeaderProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
+  const { link } = router.query as { link: string };
 
-  console.log(surveyData);
+  console.log(link);
+
   return (
     <>
       <section className="survey-info">
@@ -43,6 +47,7 @@ function ResultsHeader({ surveyData, linkPath, linkText }: ResultsHeaderProps) {
         <SendInvitationsModal
           setIsModalOpen={setIsModalOpen}
           isModalOpen={isModalOpen}
+          link={link}
         />
       )}
     </>

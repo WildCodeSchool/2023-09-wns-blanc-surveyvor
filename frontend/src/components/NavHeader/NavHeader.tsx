@@ -39,7 +39,7 @@ function NavHeader({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
 
-  const { link } = router.query;
+  const { link } = router.query as { link: string };
 
   const { data } = useQuery(GET_SURVEY_POLICY, {
     variables: { surveyLink: link },
@@ -156,6 +156,7 @@ function NavHeader({
           <SendInvitationsModal
             setIsModalOpen={setIsModalOpen}
             isModalOpen={isModalOpen}
+            link={link}
           />
         ) : (
           <PublishModal

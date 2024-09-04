@@ -11,6 +11,7 @@ import { PUBLISH_SURVEY } from "@/lib/queries/survey.queries";
 type SendInvitationsModalProps = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isModalOpen: boolean;
+  link: string;
 };
 
 const SEND_INVITATIONS = gql`
@@ -32,15 +33,20 @@ const GET_SURVEY_STATE_BY_LINK = gql`
 function SendInvitationsModal({
   setIsModalOpen,
   isModalOpen,
+  link,
 }: SendInvitationsModalProps) {
   const [value, setValue] = useState<string>("");
   const [emails, setEmails] = useState<string[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
 
   const router = useRouter();
-  const { link } = router.query;
 
-  const [sendInvitations] = useMutation(SEND_INVITATIONS);
+  const [sendInvitations] = useMutation(SEND_INVITATIONS, {
+    onError: (err) => {
+      console.error("error", err);
+      setErrors([err.message]);
+    },
+  });
   const [publishSurvey] = useMutation(PUBLISH_SURVEY);
   const { data, loading, error } = useQuery(GET_SURVEY_STATE_BY_LINK, {
     variables: {

@@ -29,11 +29,16 @@ export const cardMenuOptions: Option[] = [
   },
   {
     id: 2,
+    option: "Inviter",
+    icon: "user-add",
+  },
+  {
+    id: 3,
     option: "Archiver",
     icon: "folder-download",
   },
   {
-    id: 3,
+    id: 4,
     option: "Supprimer",
     icon: "trash",
   },

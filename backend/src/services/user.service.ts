@@ -4,7 +4,7 @@ import { User } from "../entities/user";
 import * as argon2 from "argon2";
 import { verifyPassword } from "./auth.service";
 import jwt from "jsonwebtoken";
-import { InvitationToken } from "../entities/invitationToken";
+import { InvitationToken } from "../entities/invitation";
 import { sendEmail } from "../config/mailer";
 import { ApolloError } from "apollo-server";
 import { Survey } from "../entities/survey";
