@@ -31,5 +31,6 @@ export type IconName =
   | "arrow-right-small"
   | "arrow-left-small"
   | "bulb"
+  | "user-add"
   | "";
 

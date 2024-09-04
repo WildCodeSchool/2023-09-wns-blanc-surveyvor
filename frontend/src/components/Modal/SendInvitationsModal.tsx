@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Input from "../Input";
 import Modal from "./Modal";
 import Icon from "../Icon/Icon";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { toast } from "@/lib/tools/toast.tools";
 import { emailFormat } from "@/lib/tools/format.tools";
@@ -19,6 +19,16 @@ const SEND_INVITATIONS = gql`
   }
 `;
 
+const GET_SURVEY_STATE_BY_LINK = gql`
+  query Query($surveyLink: String!) {
+    getSurveyByLink(surveyLink: $surveyLink) {
+      state {
+        state
+      }
+    }
+  }
+`;
+
 function SendInvitationsModal({
   setIsModalOpen,
   isModalOpen,
@@ -32,6 +42,20 @@ function SendInvitationsModal({
 
   const [sendInvitations] = useMutation(SEND_INVITATIONS);
   const [publishSurvey] = useMutation(PUBLISH_SURVEY);
+  const { data, loading, error } = useQuery(GET_SURVEY_STATE_BY_LINK, {
+    variables: {
+      surveyLink: link,
+    },
+  });
+
+  if (loading) {
+    return <p>Chargement...</p>;
+  }
+  if (error) {
+    return <p>Une erreur est survenue : {error.message}</p>;
+  }
+
+  const surveyState = data.getSurveyByLink.state.state;
 
   function addEmail(email: string) {
     if (!emailFormat(email)) {
@@ -114,17 +138,24 @@ function SendInvitationsModal({
                   link: link,
                   emailList: emails,
                 },
-              });
-              publishSurvey({
-                variables: { link: link },
                 onCompleted: () => {
-                  setIsModalOpen(false);
                   toast("success", "Invitations envoyées");
-                  router.push("/dashboard");
+                  if (surveyState !== "draft") {
+                    setIsModalOpen(false);
+                  }
                 },
               });
+              if (surveyState === "draft") {
+                publishSurvey({
+                  variables: { link: link },
+                  onCompleted: () => {
+                    setIsModalOpen(false);
+                    router.push("/dashboard");
+                  },
+                });
+              }
             }}>
-            Publier
+            {surveyState === "draft" ? "Publier" : "Inviter"}
           </button>
         </div>
       </div>

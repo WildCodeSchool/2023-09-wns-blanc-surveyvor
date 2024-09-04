@@ -7,10 +7,10 @@ import { GET_SURVEY_ANSWERS } from "@/lib/queries/survey.queries";
 import { Question } from "@/types/question.type";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import CheckQuestionResults from "@/components/Results/CheckQuestionResults/CheckQuestionResults";
-import Link from "next/link";
 import ResultsHeader from "@/components/Results/Header/ResultsHeader";
+import { GET_NUMBER_OF_SUBMISSIONS } from "@/lib/queries/submission.queries";
 
 function Results() {
   const router = useRouter();
@@ -26,11 +26,21 @@ function Results() {
     },
   });
 
-  if (surveyLoading) {
+  const {
+    data: numberOfSubmissions,
+    loading: numberOfSubmissionsLoading,
+    error: numberOfSubmissionsError,
+  } = useQuery(GET_NUMBER_OF_SUBMISSIONS, {
+    variables: {
+      surveyLink: link,
+    },
+  });
+
+  if (surveyLoading || numberOfSubmissionsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (surveyError) {
+  if (surveyError || numberOfSubmissionsError) {
     return <div>Error</div>;
   }
 
@@ -41,41 +51,47 @@ function Results() {
         linkPath={`/surveys/${link}/results/submissions/1`}
         linkText="Consulter chaque réponse"
       />
+      {!numberOfSubmissions.getNumberOfSubmissions ? (
+        <div className="no-submissions">
+          Aucune réponse n'a été soumise pour le moment.
+        </div>
+      ) : (
+        surveyData.getSurveyByLink.question.map((question: Question) => {
+          const props = {
+            question: question,
+            answers: question.answers,
+          };
 
-      {surveyData.getSurveyByLink.question.map((question: Question) => {
-        const props = {
-          question: question,
-          answers: question.answers,
-        };
-        return (
-          <section className="question-results" key={question.id}>
-            <div className="question-header">
-              <div className="title">
-                <Icon name={question.type.icon} width="16" />
-                <h3>{question.title}</h3>
+          return (
+            <section className="question-results" key={question.id}>
+              <div className="question-header">
+                <div className="title">
+                  <Icon name={question.type.icon} width="16" />
+                  <h3>{question.title}</h3>
+                </div>
+                <p className="description">{question.description}</p>
               </div>
-              <p className="description">{question.description}</p>
-            </div>
 
-            {(question.type.type === "text" ||
-              question.type.type === "date") && (
-              <TextOrDateQuestionResults answers={question.answers} />
-            )}
+              {(question.type.type === "text" ||
+                question.type.type === "date") && (
+                <TextOrDateQuestionResults answers={question.answers} />
+              )}
 
-            {question.type.type === "checkboxes" && (
-              <MultipleChoiceQuestionResults {...props} />
-            )}
+              {question.type.type === "checkboxes" && (
+                <MultipleChoiceQuestionResults {...props} />
+              )}
 
-            {question.type.type === "radio" && (
-              <SingleChoiceQuestionResults {...props} />
-            )}
+              {question.type.type === "radio" && (
+                <SingleChoiceQuestionResults {...props} />
+              )}
 
-            {question.type.type === "checkbox" && (
-              <CheckQuestionResults {...props} />
-            )}
-          </section>
-        );
-      })}
+              {question.type.type === "checkbox" && (
+                <CheckQuestionResults {...props} />
+              )}
+            </section>
+          );
+        })
+      )}
     </div>
   );
 }
