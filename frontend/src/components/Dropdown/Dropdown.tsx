@@ -6,19 +6,21 @@ import { IconName } from "@/types/iconName.type";
 import { displayState } from "@/lib/tools/survey.tools";
 import useClickOutside from "@/lib/hooks/useClickOutside";
 
+type DropdownProps = {
+  options: Option[] | SurveyState[];
+  buttonName: string;
+  icon: IconName;
+  selectedOption: string;
+  setSelectedOption: (option: string) => void;
+};
+
 function DropdownItem({
   options,
   buttonName,
   icon,
   selectedOption,
   setSelectedOption,
-}: {
-  options: Option[] | SurveyState[];
-  buttonName: string;
-  icon: IconName;
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-}) {
+}: DropdownProps) {
   //   ------------------------------------------------hooks-----------------------------------------------
 
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);

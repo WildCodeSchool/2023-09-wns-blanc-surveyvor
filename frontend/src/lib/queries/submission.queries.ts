@@ -48,6 +48,12 @@ export const GET_SUBMISSION_BY_COUNT = gql`
   }
 `;
 
+export const GET_NUMBER_OF_SUBMISSIONS = gql`
+  query Query($surveyLink: String!) {
+    getNumberOfSubmissions(surveyLink: $surveyLink)
+  }
+`;
+
 export const POST_SUBMISSION = gql`
   mutation Mutation($surveyLink: String!, $user: String) {
     postSubmission(surveyLink: $surveyLink, user: $user) {

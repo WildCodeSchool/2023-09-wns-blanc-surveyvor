@@ -38,7 +38,7 @@ export class UserAnswer extends BaseEntity {
   selectedOptions: QuestionOption[];
 
   @ManyToOne(() => Submission, (submission) => submission.id)
-  @Field(() => Submission)
+  @Field(() => Submission, { nullable: true })
   submission: Submission;
 }
 

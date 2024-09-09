@@ -7,6 +7,10 @@
   align-items: center;
   gap: 1rem;
 
+  .no-submissions {
+    color: var(--error-800);
+  }
+
   & > section {
     width: 100%;
     display: flex;
@@ -25,16 +29,6 @@
       gap: 1rem;
 
       @include text("xl", $font: $font-family-accent, $weight: 500);
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .results {
-    .survey-info {
-      .info-header {
-        flex-wrap: nowrap;
-      }
     }
   }
 }

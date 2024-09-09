@@ -16,6 +16,7 @@ interface InputProps {
   setValue: (value: string) => void;
   onBlur?: (e: React.FocusEvent) => void;
   onClick?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
 }
 
 const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
@@ -35,6 +36,7 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
       setValue,
       onBlur,
       onClick,
+      onKeyDown,
     },
     ref
   ) => {
@@ -89,7 +91,11 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
               onChange={handleChange}
               disabled={disabled}
               onBlur={onBlur}
-              onClick={onClick}
+              onClick={(e) => {
+                e.preventDefault();
+                if (onClick) onClick();
+              }}
+              onKeyDown={onKeyDown}
               {...(inputName.startsWith("input-date_") && {
                 style: { width: `200px` },
               })}

@@ -5,10 +5,27 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
+
     > h2 {
-      width: 100%;
       @include title("sm", $font: $font-family-accent, $weight: 500);
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .results {
+    .survey-info {
+      .info-header {
+        flex-wrap: nowrap;
+      }
     }
   }
 }

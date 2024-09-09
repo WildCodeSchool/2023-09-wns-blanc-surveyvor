@@ -2,6 +2,8 @@ import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
 import { User } from "../entities/user";
 import * as AuthService from "../services/auth.service";
 import * as UserService from "../services/user.service";
+import * as InvitationService from "../services/invitation.service";
+import { Invitation } from "../entities/invitation";
 
 @Resolver(User)
 export class UserResolver {
@@ -66,6 +68,24 @@ export class UserResolver {
       await UserService.deleteUser(user.email);
     }
     return "OK";
+  }
+
+  @Authorized()
+  @Mutation(() => String)
+  async sendInvitations(
+    @Arg("emailList", () => [String]) emailList: string[],
+    @Arg("link") link: string
+  ): Promise<string> {
+    await InvitationService.sendInvitations(emailList, link);
+    return "Les invitations ont été envoyées";
+  }
+
+  @Authorized()
+  @Query(() => [Invitation])
+  async getInvitedUsers(
+    @Arg("surveyLink") surveyLink: string
+  ): Promise<Invitation[]> {
+    return await InvitationService.findInvitationsByLink(surveyLink);
   }
 }
 

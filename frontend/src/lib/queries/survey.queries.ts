@@ -160,12 +160,36 @@ export const GET_SURVEY_ANSWERS = gql`
           selectedOptions {
             content
           }
+          submission {
+            count
+          }
         }
       }
       state {
         state
         color
       }
+    }
+  }
+`;
+
+export const GET_PUBLIC_SURVEYS = gql`
+  query GetPublicSurveys {
+    getPublicSurveys {
+      title
+      description
+      link
+      publicationDate
+      startDate
+      endDate
+    }
+  }
+`;
+
+export const PUBLISH_SURVEY = gql`
+  mutation PublishSurvey($link: String!) {
+    publishSurvey(link: $link) {
+      link
     }
   }
 `;

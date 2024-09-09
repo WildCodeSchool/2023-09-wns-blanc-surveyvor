@@ -2,7 +2,10 @@ import Icon from "@/components/Icon/Icon";
 import Header from "@/components/Results/Header/ResultsHeader";
 import DisplayAnswers from "@/components/Results/Submission/DisplayAnswers";
 import NavLayout from "@/layouts/NavLayout";
-import { GET_SUBMISSION_BY_COUNT } from "@/lib/queries/submission.queries";
+import {
+  GET_NUMBER_OF_SUBMISSIONS,
+  GET_SUBMISSION_BY_COUNT,
+} from "@/lib/queries/submission.queries";
 import { formatDate } from "@/lib/tools/format.tools";
 import { Option, Question } from "@/types/question.type";
 import { Answer } from "@/types/questionForAnswerPage.type";
@@ -46,12 +49,6 @@ const GET_SURVEY_BY_LINK = gql`
         color
       }
     }
-  }
-`;
-
-const GET_NUMBER_OF_SUBMISSIONS = gql`
-  query Query($surveyLink: String!) {
-    getNumberOfSubmissions(surveyLink: $surveyLink)
   }
 `;
 

@@ -1,9 +1,20 @@
 import Link from "next/link";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import Icon from "../Icon/Icon";
-import { CREATE_SURVEY } from "@/lib/queries/survey.queries";
+import { CREATE_SURVEY, PUBLISH_SURVEY } from "@/lib/queries/survey.queries";
 import { useEffect, useState } from "react";
+import PublishModal from "../Modal/PublishModal";
+import SendInvitationsModal from "../Modal/SendInvitationsModal";
+
+const GET_SURVEY_POLICY = gql`
+  query GetSurveyByLink($surveyLink: String!) {
+    getSurveyByLink(surveyLink: $surveyLink) {
+      title
+      private
+    }
+  }
+`;
 
 function NavHeader({
   newSurvey,
@@ -23,7 +34,14 @@ function NavHeader({
   signInOrSignUp?: boolean;
 }) {
   const [isConnected, setIsConnected] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+
+  const { link } = router.query as { link: string };
+
+  const { data } = useQuery(GET_SURVEY_POLICY, {
+    variables: { surveyLink: link },
+  });
 
   const [createSurvey] = useMutation(CREATE_SURVEY, {
     variables: { title: "Formulaire sans titre" },
@@ -65,7 +83,7 @@ function NavHeader({
         {isConnected && backToForms && (
           <button
             className="button-md-grey-outline"
-            onClick={() => router.push("/")}>
+            onClick={() => router.push("/dashboard")}>
             <Icon name="arrow-left" />
             <span className="hidden-mobile">Mes formulaires</span>
           </button>
@@ -94,11 +112,14 @@ function NavHeader({
           </Link>
         )}
         {isConnected && publish && (
-          <button className="button-md-primary-solid">
+          <button
+            className="button-md-primary-solid"
+            onClick={() => setIsModalOpen(true)}>
             <Icon name="paper-plane-top" />
             <span className="hidden-mobile">Publier</span>
           </button>
         )}
+
         {!isConnected && signInOrSignUp && (
           <>
             <button
@@ -121,6 +142,20 @@ function NavHeader({
           </button>
         )}
       </div>
+
+      {isModalOpen &&
+        (data?.getSurveyByLink?.private ? (
+          <SendInvitationsModal
+            setIsModalOpen={setIsModalOpen}
+            isModalOpen={isModalOpen}
+            link={link}
+          />
+        ) : (
+          <PublishModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+          />
+        ))}
     </nav>
   );
 }

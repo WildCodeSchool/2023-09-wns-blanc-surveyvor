@@ -4,7 +4,7 @@ import { EditSurveyInputType } from "../types/EditSurveyInputType";
 import { cryptoHash } from "../tools/hash.tools";
 import { SurveyState } from "../entities/surveyState";
 import { getSurveyStateByName } from "./surveyState.service";
-import { getSubmissionCount } from "./submission.service";
+import { IsNull, LessThan, MoreThan } from "typeorm";
 
 export async function findSurveyByLink(link: string): Promise<Survey | null> {
   const survey = await Survey.findOne({
@@ -16,7 +16,7 @@ export async function findSurveyByLink(link: string): Promise<Survey | null> {
       question: {
         options: true,
         type: true,
-        answers: { selectedOptions: true },
+        answers: { selectedOptions: true, submission: true },
       },
     },
     order: {
@@ -31,6 +31,51 @@ export async function findSurveyByLink(link: string): Promise<Survey | null> {
   }
 
   return survey;
+}
+
+export async function findPublicSurveys() {
+  try {
+    const now = new Date().getTime().toString();
+
+    const baseConditions = {
+      private: false,
+      archived: false,
+      state: {
+        state: "published",
+      },
+    };
+
+    const specificConditions = [
+      {
+        publicationDate: LessThan(now),
+        endDate: MoreThan(now),
+      },
+      {
+        publicationDate: IsNull(),
+        endDate: IsNull(),
+      },
+      {
+        publicationDate: IsNull(),
+        endDate: MoreThan(now),
+      },
+      {
+        publicationDate: LessThan(now),
+        endDate: IsNull(),
+      },
+    ];
+
+    const publicSurveys = await Survey.find({
+      where: specificConditions.map((condition) => ({
+        ...baseConditions,
+        ...condition,
+      })),
+    });
+
+    return publicSurveys;
+  } catch (error) {
+    console.error("Error fetching public surveys:", error);
+    throw error;
+  }
 }
 
 export async function findSurveysByOwner(user: User): Promise<Survey[] | null> {
@@ -96,6 +141,22 @@ export async function edit(
     surveyToEdit.private = survey.private;
     surveyToEdit.collectingUserData = survey.collectingUserData;
     return await surveyToEdit.save();
+  }
+}
+
+export async function publish(link: string): Promise<Survey | undefined> {
+  const surveyToPublish = await Survey.findOne({
+    where: { link: link },
+    relations: {
+      state: true,
+    },
+  });
+  if (surveyToPublish) {
+    surveyToPublish.publicationDate = new Date().getTime().toString();
+    surveyToPublish.state = (await getSurveyStateByName(
+      "published"
+    )) as SurveyState;
+    return await surveyToPublish.save();
   }
 }
 

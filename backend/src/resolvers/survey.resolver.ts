@@ -13,6 +13,11 @@ export class SurveyResolver {
     return SurveyService.findSurveyByLink(surveyLink);
   }
 
+  @Query(() => [Survey])
+  getPublicSurveys(): Promise<Survey[] | null> {
+    return SurveyService.findPublicSurveys();
+  }
+
   @Authorized()
   @Query(() => [Survey])
   getSurveysByOwner(@Ctx("user") user: User): Promise<Survey[] | null> {
@@ -35,6 +40,12 @@ export class SurveyResolver {
     @Arg("survey") survey: EditSurveyInputType
   ): Promise<Survey | undefined> {
     return SurveyService.edit(link, survey);
+  }
+
+  @Authorized()
+  @Mutation(() => Survey)
+  publishSurvey(@Arg("link") link: string): Promise<Survey | undefined> {
+    return SurveyService.publish(link);
   }
 
   @Authorized()

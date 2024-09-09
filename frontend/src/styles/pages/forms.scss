@@ -1,0 +1,67 @@
+@use "../elements/typography" as *;
+@use "../elements/shadows" as *;
+
+.public-forms {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    h1 {
+      @include title(md);
+    }
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
+    gap: 2rem;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background-color: var(--white);
+      border-radius: 8px;
+      padding: 16px 24px;
+      border: 1px solid var(--grey-200);
+      @include shadow(md);
+
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        border: 1px solid var(--primary-200);
+        background-color: var(--primary-50);
+        @include shadow(lg);
+        transform: scale(1.05);
+      }
+
+      h3 {
+        @include text(xl);
+      }
+
+      .publication-date {
+        @include text(sm);
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        color: var(--grey-400);
+      }
+
+      .description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        line-clamp: 5;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
+      }
+    }
+  }
+}
+

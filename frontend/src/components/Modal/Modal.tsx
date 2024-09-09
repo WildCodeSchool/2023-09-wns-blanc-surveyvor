@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import Icon from "../Icon/Icon";
 import useClickOutside from "@/lib/hooks/useClickOutside";
 
 function Modal({
@@ -42,12 +41,12 @@ function Modal({
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
         className="modal"
-        onClick={(e) => e.stopPropagation()}>
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}>
         <header className="modal-header">
           <p className="text-xl text--medium">{title}</p>
-          <button className="close" onClick={() => setIsOpen(false)}>
-            <Icon name="cross" width="16" />
-          </button>
         </header>
         {children}
       </div>

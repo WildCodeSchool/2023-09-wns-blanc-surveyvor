@@ -5,6 +5,7 @@ import PasswordValidationList from "@/components/PasswordValidationList";
 import NavLayout from "@/layouts/NavLayout";
 import { passwordValidationMessages } from "@/lib/data/data";
 import { GET_ME, UPDATE_USER } from "@/lib/queries/user.queries";
+import { toast } from "@/lib/tools/toast.tools";
 import {
   PasswordValidationProps,
   validatePassword,
@@ -126,15 +127,6 @@ function Profile() {
       [key]: value,
     }));
   };
-
-  function toast(icon: "success" | "error", title: string) {
-    Swal.fire({
-      icon: icon,
-      title: title,
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
 
   async function handleSubmitPersonalData(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

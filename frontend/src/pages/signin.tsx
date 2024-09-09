@@ -24,7 +24,7 @@ function SignIn() {
     },
     onCompleted: (data) => {
       localStorage.setItem("token", data.signIn);
-      router.push("/");
+      router.push("/dashboard");
     },
   });
 

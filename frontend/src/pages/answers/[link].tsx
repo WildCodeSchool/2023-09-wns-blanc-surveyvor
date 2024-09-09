@@ -132,8 +132,6 @@ function AnswerSurvey() {
             user: token,
           },
           onCompleted: (data) => {
-            // setSubmissionId(data.postSubmission.id);
-
             onSubmitAnswers(
               {
                 questions,

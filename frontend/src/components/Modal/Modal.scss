@@ -15,13 +15,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: calc(100% - 1rem);
+    width: calc(100% - 2rem);
     max-width: 560px;
     padding: 24px;
     gap: 1rem;
     border-radius: 1rem;
     background-color: var(--white);
     border: 1px solid var(--grey-200);
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 
     .modal-header {
       width: 100%;
