@@ -129,7 +129,10 @@ function SendInvitationsModal({
         </div>
         <div className="buttons">
           <button
-            onClick={() => setIsModalOpen(false)}
+            onClick={(e) => {
+              e.preventDefault();
+              setIsModalOpen(false);
+            }}
             className="button-md-primary-outline">
             Annuler
           </button>

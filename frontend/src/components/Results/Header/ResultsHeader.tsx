@@ -1,4 +1,6 @@
+import CopyButton from "@/components/CopyButton";
 import Icon from "@/components/Icon/Icon";
+import Modal from "@/components/Modal/Modal";
 import SendInvitationsModal from "@/components/Modal/SendInvitationsModal";
 import { Survey } from "@/types/survey.type";
 import Link from "next/link";
@@ -12,30 +14,40 @@ type ResultsHeaderProps = {
 };
 
 function ResultsHeader({ surveyData, linkPath, linkText }: ResultsHeaderProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
+  const [isShowLinkModalOpen, setIsShowLinkModalOpen] = useState(false);
   const router = useRouter();
   const { link } = router.query as { link: string };
 
-  console.log(link);
+  const linkToShare = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/answers/${link}`;
 
   return (
     <>
       <section className="survey-info">
         <div className="info-header">
           <h2>{surveyData.title}</h2>
-          {surveyData.private && (
-            <div>
-              <Icon name="lock" width="16" />
-              {surveyData.state.state === "published" && (
-                <button
-                  className="button-md-primary-outline"
-                  onClick={() => setIsModalOpen(true)}>
-                  <Icon name="user-add" width="12" />
-                  <span className="hidden-mobile">Inviter</span>
-                </button>
-              )}
-            </div>
-          )}
+          <div>
+            {!surveyData.private && (
+              <button
+                className="button-md-primary-outline"
+                onClick={() => setIsShowLinkModalOpen(true)}>
+                Afficher le lien
+              </button>
+            )}
+            {surveyData.private && (
+              <>
+                <Icon name="lock" width="16" />
+                {surveyData.state.state === "published" && (
+                  <button
+                    className="button-md-primary-outline"
+                    onClick={() => setIsInvitationModalOpen(true)}>
+                    <Icon name="user-add" width="12" />
+                    <span className="hidden-mobile">Inviter</span>
+                  </button>
+                )}
+              </>
+            )}
+          </div>
         </div>
         <p className="description">{surveyData.description}</p>
         <Link href={linkPath} className="button-md-primary-solid">
@@ -43,12 +55,24 @@ function ResultsHeader({ surveyData, linkPath, linkText }: ResultsHeaderProps) {
         </Link>
       </section>
 
-      {isModalOpen && (
+      {isInvitationModalOpen && (
         <SendInvitationsModal
-          setIsModalOpen={setIsModalOpen}
-          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsInvitationModalOpen}
+          isModalOpen={isInvitationModalOpen}
           link={link}
         />
+      )}
+
+      {isShowLinkModalOpen && (
+        <Modal
+          isOpen={isShowLinkModalOpen}
+          setIsOpen={setIsShowLinkModalOpen}
+          title="Lien du sondage">
+          <>
+            <p className="link">{linkToShare}</p>
+            <CopyButton textToCopy={linkToShare} />
+          </>
+        </Modal>
       )}
     </>
   );

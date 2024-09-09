@@ -70,7 +70,7 @@ export class UserResolver {
     return "OK";
   }
 
-  // @Authorized()
+  @Authorized()
   @Mutation(() => String)
   async sendInvitations(
     @Arg("emailList", () => [String]) emailList: string[],
@@ -80,7 +80,7 @@ export class UserResolver {
     return "Les invitations ont été envoyées";
   }
 
-  // @Authorized()
+  @Authorized()
   @Query(() => [Invitation])
   async getInvitedUsers(
     @Arg("surveyLink") surveyLink: string

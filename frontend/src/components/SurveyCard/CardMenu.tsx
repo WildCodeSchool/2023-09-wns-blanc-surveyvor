@@ -110,7 +110,9 @@ function CardMenu({
         <div
           ref={ref as React.RefObject<HTMLDivElement>}
           className="dropdown-wrapper"
-          onBlur={() => setIsCardMenuOpen(false)}>
+          onBlur={() => {
+            setIsCardMenuOpen(false);
+          }}>
           {cardMenuOptions.map((option) => {
             const disableArvhive =
               option.option === "Archiver" &&

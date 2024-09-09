@@ -24,21 +24,20 @@ export async function sendInvitations(
       where: { survey: survey },
     });
 
-    const alreadyInvited = Invitations.map((invitation) => {
-      return emails.includes(invitation.invitedEmail)
-        ? invitation.invitedEmail
-        : null;
-    });
+    const alreadyInvited = Invitations.reduce((acc, invitation) => {
+      if (emails.includes(invitation.invitedEmail)) {
+        acc.push(invitation.invitedEmail);
+      }
+      return acc;
+    }, [] as string[]);
 
-    console.log("alreadyInvited :", alreadyInvited);
+    console.log("alreadyInvited", alreadyInvited);
 
     if (alreadyInvited.length) {
       throw new Error(
-        `${alreadyInvited.join(", ")} ${
-          alreadyInvited.length > 1
-            ? "ont déjà été invités"
-            : "est déjà invité."
-        }`
+        alreadyInvited.length > 1
+          ? `${alreadyInvited.join(", ")} ont déjà été invités`
+          : `${alreadyInvited[0]} a déjà été invité`
       );
     }
 

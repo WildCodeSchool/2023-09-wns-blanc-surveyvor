@@ -7,9 +7,29 @@ import { QuestionForAnswerPage } from "@/types/questionForAnswerPage.type";
 import "../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss";
 import "../../../node_modules/react-datepicker/src/stylesheets/datepicker-cssmodules.scss";
 
-const CustomInput = forwardRef((props: any, ref) => {
-  return <Input {...props} ref={ref} />;
-});
+interface CustomInputProps {
+  value: string;
+  inputName: string;
+  onClick?: () => void;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  type: string;
+}
+
+const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+  ({ value, onClick, inputName, setValue, type, ...rest }, ref) => {
+    return (
+      <Input
+        value={value}
+        onClick={onClick}
+        ref={ref}
+        type={type}
+        inputName={inputName}
+        setValue={setValue}
+        {...rest}
+      />
+    );
+  }
+);
 CustomInput.displayName = "CustomInput";
 
 registerLocale("fr", fr);
@@ -110,3 +130,4 @@ function AnswerDateQuestion({
 }
 
 export default AnswerDateQuestion;
+

@@ -24,7 +24,6 @@ function NavHeader({
   profile,
   publish,
   signInOrSignUp,
-  publicForms,
 }: {
   newSurvey?: boolean;
   backToForms?: boolean;
@@ -33,7 +32,6 @@ function NavHeader({
   profile?: boolean;
   publish?: boolean;
   signInOrSignUp?: boolean;
-  publicForms?: boolean;
 }) {
   const [isConnected, setIsConnected] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -82,12 +80,6 @@ function NavHeader({
         </div>
       )}
       <div className="nav-buttons">
-        {publicForms && (
-          <Link href="/public/forms" className="button-md-primary-solid">
-            <Icon name="unlock" />
-            <span className="hidden-mobile">Formulaires publiques</span>
-          </Link>
-        )}
         {isConnected && backToForms && (
           <button
             className="button-md-grey-outline"

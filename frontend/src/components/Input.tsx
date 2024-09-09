@@ -91,7 +91,10 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
               onChange={handleChange}
               disabled={disabled}
               onBlur={onBlur}
-              onClick={onClick}
+              onClick={(e) => {
+                e.preventDefault();
+                if (onClick) onClick();
+              }}
               onKeyDown={onKeyDown}
               {...(inputName.startsWith("input-date_") && {
                 style: { width: `200px` },

@@ -7,6 +7,9 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    max-height: 296px;
+    overflow-y: auto;
+    scrollbar-width: none;
 
     .email {
       width: 100%;
